@@ -1,7 +1,5 @@
 <template>
-    Welcome
+    <div>
+         Welcome
+    </div>
 </template>
-
-<style lang="sass">
-    @use "~/assets/main.sass"
-</style>

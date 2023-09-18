@@ -1,0 +1,16 @@
+body
+    background-color: #DEE0D3
+
+.main-container
+    height: 100vh
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+
+.main-card
+    $margin-y-percent: calc(84px / 1080px)
+    $margin-x-percent: calc(112px / 1920px)
+    background-color: #F7F5E8
+    height: calc(100vh - calc($margin-y-percent * 2 * 100vh))
+    width: calc(100vw - calc($margin-x-percent * 2 * 100vw))
