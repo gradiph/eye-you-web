@@ -13,9 +13,12 @@ export default defineNuxtConfig({
       ],
     },
   },
-  css: ['~/assets/app.sass'],
+  css: [
+    '~/assets/app.sass'
+  ],
   devtools: { enabled: true },
+  modules: ['nuxt-icon'],
   plugins: [
-    { src: "~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js", mode: 'client' }
+    { src: '~/plugins/bootstrap.js', mode: 'client' }
   ],
 })
