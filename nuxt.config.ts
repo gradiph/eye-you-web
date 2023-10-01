@@ -17,8 +17,15 @@ export default defineNuxtConfig({
     '~/assets/app.sass'
   ],
   devtools: { enabled: true },
-  modules: ['nuxt-icon'],
+  modules: [
+    'nuxt-icon'
+  ],
   plugins: [
     { src: '~/plugins/bootstrap.js', mode: 'client' }
   ],
+  runtimeConfig: {
+    public: {
+      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL
+    }
+  },
 })
