@@ -1,28 +1,49 @@
 <template>
   <form id="form-register" @submit.prevent="onSubmit">
-      <InputText v-model="form.username" placeholder="Username" form="form-register" />
-      <InputText v-model="form.email" placeholder="Email" form="form-register" class="mt-4" />
-      <InputPassword v-model="form.password" placeholder="Password" form="form-register" class="mt-4" />
+    <InputText v-model="form.username" placeholder="Username" form="form-register" />
+    <InputText v-model="form.email" placeholder="Email" form="form-register" class="mt-4" />
+    <InputPassword v-model="form.password" placeholder="Password" form="form-register" class="mt-4" />
 
-      <div class="d-grid mt-5">
-          <button type="submit" class="btn btn-primary">Daftar</button>
-      </div>
+    <div class="d-grid mt-5">
+      <button type="submit" class="btn btn-primary" :disabled="isLoading">Daftar</button>
+    </div>
   </form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted } from 'vue'
 
-const form = useState('formRegister', () => {
-  return {
-    username: '',
-    email: '',
-    password: ''
-  }
-})
+interface RegisterResponse {
+  user?: any
+}
 
-function onSubmit() {
+const rc = useRuntimeConfig()
+const form = useFormRegister()
+const isLoading = ref(false)
+const tab = useState('sideMenuTab', () => 'login')
+
+async function onSubmit() {
+  isLoading.value = true
   console.log('onSubmit', form.value)
+  const url = '/user/register'
+  const { data } = await useFetch<RegisterResponse>(url, {
+    method: 'post',
+    baseURL: rc.public.apiBaseUrl,
+    body: form.value,
+  })
+  console.log({ data })
+  if (data?.value?.user) {
+    useToastClient({
+      text: 'Pendaftaran Berhasil',
+    })
+    tab.value = 'login'
+  } else {
+    useToastClient({
+      title: 'Pendaftaran Gagal',
+    })
+  }
+
+  isLoading.value = false
 }
 
 function resetForm() {

@@ -12,13 +12,15 @@
             </div>
         </div>
 
-        <div class="row gy-1">
+        <div data-bs-toggle="offcanvas" href="#side-menu" class="row gy-1">
             <div class="col-12 text-center">
                 <ButtonPlay />
             </div>
 
-            <div data-bs-toggle="offcanvas" href="#side-menu" class="col-12 play-instruction text-center text-secondary">
-                Tekan untuk memulai
+            <div class="col-12 play-instruction text-center text-secondary">
+                <span class="clickable">
+                    Tekan untuk memulai
+                </span>
             </div>
         </div>
     </div>
