@@ -12,10 +12,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-
-interface RegisterResponse {
-  user?: any
-}
+import { RegisterResponse } from '~/types';
 
 const rc = useRuntimeConfig()
 const form = useFormRegister()

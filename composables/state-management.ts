@@ -1,15 +1,8 @@
-interface FormLogin {
-  username: string;
-  password: string;
-}
+import { FormLogin, FormRegister, GameMode } from '~/types'
 
 const defaultFormLogin: FormLogin = {
   username: '',
   password: ''
-}
-
-interface FormRegister extends FormLogin {
-  email: string;
 }
 
 const defaultFormRegister: FormRegister = {
@@ -18,7 +11,8 @@ const defaultFormRegister: FormRegister = {
   email: ''
 }
 
-export const useToken = () => useState<string | null>('token', () => null)
+export const useToken = () => useState<string | null>('token', () => '29|eCiad4IZgvmeCJ3nQTZak7YdqOtH30osoXxJsaxXcf7b2c10')
 export const useTab = () => useState<string>('sideMenuTab', () => 'login')
 export const useFormLogin = () => useState<FormLogin>('formLogin', () => defaultFormLogin)
 export const useFormRegister = () => useState<FormRegister>('formRegister', () => defaultFormRegister)
+export const useGameModes = () => useState<GameMode[]>('gameMode', () => [])

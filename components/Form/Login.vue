@@ -14,10 +14,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-
-interface LoginResponse {
-  token?: string;
-}
+import { LoginResponse } from '~/types'
 
 const rc = useRuntimeConfig()
 const tab = useTab()
