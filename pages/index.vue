@@ -12,9 +12,9 @@
             </div>
         </div>
 
-        <div data-bs-toggle="offcanvas" href="#side-menu" class="row gy-1">
+        <div class="row gy-1">
             <div class="col-12 text-center">
-                <ButtonPlay />
+                <ButtonPlay data-bs-toggle="offcanvas" href="#side-menu" />
             </div>
 
             <div class="col-12 play-instruction text-center text-secondary">
@@ -25,6 +25,12 @@
         </div>
     </div>
 </template>
+
+<script setup>
+function openCanvas() {
+    
+}
+</script>
 
 <style scoped lang="sass">
 .logo-main

@@ -1,11 +1,12 @@
 <template>
-  <NuxtLayout :name="template">
-    <NuxtPage />
-  </NuxtLayout>
+  <div>
+    <NuxtLayout :name="layout">
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
 
 <script setup>
-
-const profile = useState('profile', () => null)
-const template = computed(() => profile.value == null ? 'default' : 'logged-in')
+const profile = useProfile()
+const layout = computed(() => profile.value === undefined ? 'default' : 'logged-in')
 </script>

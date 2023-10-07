@@ -14,9 +14,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { LoginResponse } from '~/types'
 
-const rc = useRuntimeConfig()
 const tab = useTab()
 const token = useToken()
 const form = useFormLogin()
@@ -27,21 +25,17 @@ const showSideMenu = useShowSideMenu()
 async function onSubmit() {
   isLoading.value = true
   console.log('onSubmit', form.value)
-  const url = '/user/login'
-  const { data } = await useFetch<LoginResponse>(url, {
-    method: 'post',
-    baseURL: rc.public.apiBaseUrl,
-    body: form.value,
-  })
-  console.log({ data })
+  const { data, error } = await useFetchLogin(form.value)
+  console.log('error', error.value)
+  console.log('data', data.value)
   if (data?.value?.token) {
+    showSideMenu.value = false
     token.value = data.value.token
     useToastClient({
       html: '<img src="/berhasil-masuk.png" alt="login-success"/> Berhasil Masuk',
     })
     await router.push('/welcome')
     localStorage.setItem('t', token.value)
-    showSideMenu.value = false
   } else {
     useToastClient({
       title: 'Username/Password salah',

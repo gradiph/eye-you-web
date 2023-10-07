@@ -21,11 +21,12 @@ export default defineNuxtConfig({
     'nuxt-icon'
   ],
   plugins: [
-    { src: '~/plugins/bootstrap.js', mode: 'client' }
+    { src: '~/plugins/bootstrap.client.ts', mode: 'client' }
   ],
   runtimeConfig: {
     public: {
       apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL
     }
   },
+  ssr: false,
 })

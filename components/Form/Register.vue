@@ -12,9 +12,8 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { RegisterResponse } from '~/types';
+import { useFetchRegister } from '~/composables/data-fetcher';
 
-const rc = useRuntimeConfig()
 const form = useFormRegister()
 const isLoading = ref(false)
 const tab = useState('sideMenuTab', () => 'login')
@@ -22,13 +21,9 @@ const tab = useState('sideMenuTab', () => 'login')
 async function onSubmit() {
   isLoading.value = true
   console.log('onSubmit', form.value)
-  const url = '/user/register'
-  const { data } = await useFetch<RegisterResponse>(url, {
-    method: 'post',
-    baseURL: rc.public.apiBaseUrl,
-    body: form.value,
-  })
-  console.log({ data })
+  const { data, error } = await useFetchRegister(form.value)
+  console.log('register:data', data)
+  console.log('register:error', error)
   if (data?.value?.user) {
     useToastClient({
       text: 'Pendaftaran Berhasil',
