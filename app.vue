@@ -7,5 +7,5 @@
 <script setup>
 
 const profile = useState('profile', () => null)
-const template = computed(() => profile == null ? 'default' : 'logged-in')
+const template = computed(() => profile.value == null ? 'default' : 'logged-in')
 </script>

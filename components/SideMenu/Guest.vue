@@ -30,7 +30,9 @@
 </template>
 
 <script setup>
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle'
 import { onMounted, watch } from 'vue'
+import { useShowSideMenu } from '~/composables/state-management'
 
 const formLogin = ref(null)
 const formRegister = ref(null)
@@ -40,6 +42,7 @@ const message = computed(() => {
     ? 'Silakan isi kolom registrasi dibawah'
     : 'Selamat Datang di Eye You'
 })
+const showSideMenu = useShowSideMenu()
 
 watch(tab, (newVal, oldVal) => {
   console.log('newVal', newVal, 'oldVal', oldVal)
@@ -52,12 +55,21 @@ watch(tab, (newVal, oldVal) => {
   }
 })
 
+watch(showSideMenu, (newVal) => {
+  if (!newVal) {
+    const bsOffcanvas = new bootstrap.Offcanvas('#side-menu')
+    bsOffcanvas.hide()
+  }
+})
+
 onMounted(() => {
   // register bootstrap event
   const canvas = document.getElementById('side-menu')
   canvas.addEventListener('show.bs.offcanvas', () => {
     tab.value = 'login'
-    showSideMenu = true
+  })
+  canvas.addEventListener('shown.bs.offcanvas', () => {
+    showSideMenu.value = true
   })
 })
 </script>

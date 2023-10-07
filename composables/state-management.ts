@@ -1,4 +1,4 @@
-import { FormLogin, FormRegister, GameMode } from '~/types'
+import { FormLogin, FormRegister, GameMode, Profile } from '~/types'
 
 const defaultFormLogin: FormLogin = {
   username: '',
@@ -16,3 +16,5 @@ export const useTab = () => useState<string>('sideMenuTab', () => 'login')
 export const useFormLogin = () => useState<FormLogin>('formLogin', () => defaultFormLogin)
 export const useFormRegister = () => useState<FormRegister>('formRegister', () => defaultFormRegister)
 export const useGameModes = () => useState<GameMode[]>('gameMode', () => [])
+export const useShowSideMenu = () => useState<boolean>('showSideMenu', () => false)
+export const useProfile = () => useState<Profile|undefined>('profile', () => undefined)

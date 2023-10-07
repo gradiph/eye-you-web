@@ -22,6 +22,7 @@ const token = useToken()
 const form = useFormLogin()
 const isLoading = ref(false)
 const router = useRouter()
+const showSideMenu = useShowSideMenu()
 
 async function onSubmit() {
   isLoading.value = true
@@ -40,6 +41,7 @@ async function onSubmit() {
     })
     await router.push('/welcome')
     localStorage.setItem('t', token.value)
+    showSideMenu.value = false
   } else {
     useToastClient({
       title: 'Username/Password salah',
