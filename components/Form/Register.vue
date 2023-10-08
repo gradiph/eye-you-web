@@ -21,18 +21,12 @@ const tab = useState('sideMenuTab', () => 'login')
 async function onSubmit() {
   isLoading.value = true
   console.log('onSubmit', form.value)
-  const { data, error } = await useFetchRegister(form.value)
-  console.log('register:data', data)
-  console.log('register:error', error)
-  if (data?.value?.user) {
+  const isSuccess = await useFetchRegister(form.value)
+  if (isSuccess) {
     useToastClient({
       text: 'Pendaftaran Berhasil',
     })
     tab.value = 'login'
-  } else {
-    useToastClient({
-      title: 'Pendaftaran Gagal',
-    })
   }
 
   isLoading.value = false

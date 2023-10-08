@@ -16,30 +16,19 @@
 import { onMounted } from 'vue'
 
 const tab = useTab()
-const token = useToken()
 const form = useFormLogin()
 const isLoading = ref(false)
 const router = useRouter()
-const showSideMenu = useShowSideMenu()
 
 async function onSubmit() {
   isLoading.value = true
   console.log('onSubmit', form.value)
-  const { data, error } = await useFetchLogin(form.value)
-  console.log('error', error.value)
-  console.log('data', data.value)
-  if (data?.value?.token) {
-    showSideMenu.value = false
-    token.value = data.value.token
+  const isSuccess = await useFetchLogin(form.value)
+  if (isSuccess) {
     useToastClient({
       html: '<img src="/berhasil-masuk.png" alt="login-success"/> Berhasil Masuk',
     })
     await router.push('/welcome')
-    localStorage.setItem('t', token.value)
-  } else {
-    useToastClient({
-      title: 'Username/Password salah',
-    })
   }
 
   isLoading.value = false

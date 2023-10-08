@@ -7,6 +7,8 @@
 </template>
 
 <script setup>
-const profile = useProfile()
+const profile = computed(() => {
+  return useCurrent().value.profile
+})
 const layout = computed(() => profile.value === undefined ? 'default' : 'logged-in')
 </script>

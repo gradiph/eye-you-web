@@ -17,41 +17,27 @@
 </template>
 
 <script setup lang="ts">
-import { GameMode, GameModesResponse } from '~/types'
+import { GameMode } from '~/types'
 
 const rc = useRuntimeConfig()
 const gameModes = useGameModes()
-const token = useToken()
+const router = useRouter()
+const current = useCurrent()
+
 onMounted(async () => {
-  await fetchMode()
+  await useFetchModes()
 })
 
 function getModeImage(mode: GameMode): string {
   return rc.public.apiBaseUrl + mode.image
 }
 
-function startGame(mode: GameMode) {
-
-}
-
-async function fetchMode() {
-  const url = '/user/game/modes'
-  const resp = await useFetch<GameModesResponse>(url, {
-    baseURL: rc.public.apiBaseUrl,
-    headers: {
-      authorization: `Bearer ${token.value}`
-    }
-  })
-  console.log('fetchMode:resp', resp)
-  const { data, error } = resp
-  console.log('fetchMode:data', data)
-  if (data?.value?.modes) {
-    gameModes.value = data.value.modes
-  } else {
-    console.log('fetchMode:error', error)
-    useToastClient({
-      text: 'Something wrong happened'
-    })
+async function startGame(mode: GameMode) {
+  console.log('startGame:mode', mode)
+  current.value.gameMode = mode
+  const isSuccess = await useFetchQuestions(mode.id)
+  if (isSuccess) {
+    router.push('/question')
   }
 }
 </script>

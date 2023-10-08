@@ -11,10 +11,10 @@
 
         <div class="row gy-1">
             <div class="col-12 text-center">
-                <ButtonPlay />
+                <ButtonPlay @click="selectMode()"/>
             </div>
 
-            <div @click="" class="col-12 text-center text-secondary clickable">
+            <div @click="selectMode()" class="col-12 text-center text-secondary clickable">
                 Selanjutnya
             </div>
         </div>
@@ -22,6 +22,11 @@
 </template>
 
 <script setup>
+const router = useRouter()
+
+function selectMode() {
+    router.push('/select-mode')
+}
 </script>
 
 <style scoped lang="sass">
