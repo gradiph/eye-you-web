@@ -2,16 +2,20 @@ import { indexOf, isNull } from 'lodash'
 import {
   FormLogin,
   FormRegister,
+  FormSubmit,
   GameMode,
   GameModesResponse,
   GetProfileResponse,
   LoginResponse,
-  Profile,
   Question,
+  RankingResponse,
   RegisterResponse,
+  Result,
   StartGameResponse,
-  SubmitResponse
+  SubmitResponse,
+  Test
 } from '~/types'
+import { useResults } from './state-management'
 
 const rc = useRuntimeConfig()
 const token = useToken()
@@ -29,7 +33,7 @@ export const useFetchLogin = async (body: FormLogin): Promise<boolean> => {
     baseURL,
     body,
   })
-  if (isNull(error)) {
+  if (isNull(error.value)) {
     if (data.value?.token) {
       useToken().value = data.value?.token
       return true
@@ -56,7 +60,7 @@ export const useFetchRegister = async (body: FormRegister): Promise<boolean> => 
     baseURL: baseURL.value,
     body,
   })
-  if (isNull(error)) {
+  if (isNull(error.value)) {
     if (data?.value?.user) {
       return true
     } else {
@@ -80,7 +84,7 @@ export const useFetchProfile = async (): Promise<boolean> => {
     baseURL: baseURL.value,
     headers: headers.value,
   })
-  if (isNull(error)) {
+  if (isNull(error.value)) {
     useCurrent().value.profile = data.value?.user
     return true
   } else {
@@ -98,7 +102,7 @@ export const useFetchModes = async (): Promise<boolean> => {
     baseURL: baseURL.value,
     headers: headers.value,
   })
-  if (isNull(error)) {
+  if (isNull(error.value)) {
     useGameModes().value = data.value?.modes as Array<GameMode>
     return true
   } else {
@@ -111,15 +115,22 @@ export const useFetchModes = async (): Promise<boolean> => {
 }
 
 export const useFetchQuestions = async (modeId: number): Promise<boolean> => {
+  const current = useCurrent()
+  const questions = useQuestions()
+
   const url = '/user/game/start'
   const body = { modeId }
   const { data, error } = await useFetch<StartGameResponse>(url, {
     baseURL: baseURL.value,
     body,
     headers: headers.value,
+    method
   })
-  if (isNull(error)) {
-    useQuestions().value = data.value?.questions as Array<Question>
+  if (isNull(error.value)) {
+    questions.value = data.value?.questions as Array<Question>
+    current.value.test = data.value?.test
+    current.value.result = data.value?.result
+    current.value.question = questions.value[0]
     return true
   } else {
     useToastClient({
@@ -130,7 +141,7 @@ export const useFetchQuestions = async (modeId: number): Promise<boolean> => {
   }
 }
 
-export const useFetchSubmit = async (body: FormSubmit): Promise<boolean> => {
+export const useFetchSubmit = async (body: FormSubmit): Promise<boolean|null> => {
   const current = useCurrent()
   const questions = useQuestions()
 
@@ -139,11 +150,38 @@ export const useFetchSubmit = async (body: FormSubmit): Promise<boolean> => {
     baseURL: baseURL.value,
     body,
     headers: headers.value,
+    method
   })
-  if (isNull(error)) {
-    current.value.result = data.value.result
-    const nextIndex = indexOf(questions, current.value.question) + 1
-    current.value.question = useQuestions().value[nextIndex]
+  if (isNull(error.value)) {
+    current.value.result = data.value?.result
+    const nextIndex = indexOf(questions.value, current.value.question) + 1
+    if (nextIndex >= questions.value.length) {
+      return null
+    } else {
+      current.value.question = useQuestions().value[nextIndex]
+      return true
+    }
+  } else {
+    useToastClient({
+      title: 'Terjadi kesalahan',
+      text: error.value?.message
+    })
+    return false
+  }
+}
+
+export const useFetchResults = async (): Promise<boolean> => {
+  const current = useCurrent()
+  const results = useResults()
+
+  const url = `/user/ranking/${current.value.test?.id}`
+  const { data, error } = await useFetch<RankingResponse>(url, {
+    baseURL: baseURL.value,
+    headers: headers.value,
+    method: 'GET'
+  })
+  if (isNull(error.value)) {
+    results.value = data.value?.results.data || []
     return true
   } else {
     useToastClient({

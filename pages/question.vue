@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
-    <div class="row d-flex justify-content-between">
-      <div class="col-auto">
+  <div class="main-content mx-auto">
+    <div class="row d-flex justify-content-between mt-4">
+      <div class="col-auto fw-bold fs-2 fst-italic text-primary">
         Tes #{{ testNumber }}
       </div>
 
-      <div class="col-auto">
+      <div class="col-auto fw-bold fs-2 fst-italic text-primary">
         Poin {{ score }}
       </div>
     </div>
@@ -15,33 +15,50 @@
         <div class="card shadow">
           <div class="card-body">
             <div class="row">
-              <div class="col-12 d-flex justify-content-center">
-                <div class="row">
+              <div class="col-12 mx-auto mb-3">
+                <div class="row g-0 row-timer mx-auto">
                   <div class="col-auto">
-                    <img src="/hourglass.png" alt="Timer" />
+                    <img src="/hourglass.png" alt="Timer" class="timer" />
                   </div>
+
                   <div class="col">
-                    <div class="progress" style="height: 12px;">
-                      <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress progress-timer mt-2">
+                      <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 25%;"
+                        aria-valuenow="25"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div class="col-6">
-                <img :src="questionImage" />
+                <div class="card bg-dark ms-auto mb-3 question-image">
+                  <div class="card-body">
+                    <img :src="questionImage" class="img-fluid" />
+                  </div>
+                </div>
               </div>
 
               <div class="col-6">
-                <div class="float-left">
+                <div class="float-start">
                   <img src="/quotation-mark.png" />
                 </div>
-                <div class="row">
-                  <div v-for="answer in answers" :key="answer.id" class="col-4">
-                    <img @click="selectAnswer(answer)" :src="answer.image" :alt="answer.alt_text" class="clickable" />
+
+                <div class="clearfix"></div>
+
+                <div class="row row-answer mx-auto g-0">
+                  <div v-for="answer in answers" :key="answer.id" class="col-12 col-md-4 text-center">
+                    <img @click="selectAnswer(answer)" :src="answerImage(answer)" :alt="answer.alt_text"
+                      :title="answer.alt_text" class="clickable answer-image" />
                   </div>
                 </div>
-                <div class="float-right">
+                
+                <div class="float-end">
                   <img src="/quotation-mark.png" />
                 </div>
               </div>
@@ -54,15 +71,18 @@
 </template>
 
 <script setup lang="ts">
-import { indexOf } from 'lodash'
+import { indexOf, isNull } from 'lodash'
 import { Answer, FormSubmit, Question, Result } from '~/types';
 
 const current = useCurrent()
 const questions = useQuestions()
+const router = useRouter()
+const rc = useRuntimeConfig()
+
 const testNumber = computed(() => indexOf(questions.value, current.value.question) + 1)
 const score = computed(() => current.value.score)
 const question = computed(() => current.value?.question as Question)
-const questionImage = computed(() => question.value.image)
+const questionImage = computed(() => rc.public.apiBaseUrl + question.value.image)
 const answers = computed(() => question.value?.answers || [])
 const resultId = computed(() => (current.value.result as Result).id)
 
@@ -72,9 +92,36 @@ async function selectAnswer(answer: Answer) {
     answerId: answer.id,
     questionId: question.value.id
   }
-  await useFetchSubmit(form)
+  const result = await useFetchSubmit(form)
+  if (isNull(result)) {
+    router.push('/ranking')
+  }
+}
+
+function answerImage(answer: Answer) {
+  return rc.public.apiBaseUrl + answer.image
 }
 </script>
 
 <style scoped lang="sass">
+.main-content
+  width: 63.35%
+
+.question-image
+  width: 80%
+
+.timer
+  width: 50%
+
+.row-timer
+  width: 75%
+
+.progress-timer
+  height: 9px
+
+.answer-image
+  width: 80%
+
+.row-answer
+  width: 80%
 </style>

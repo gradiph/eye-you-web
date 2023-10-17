@@ -1,9 +1,20 @@
+import { Profile } from "./profile"
+
 export interface Result {
   id: number
   user_id: number
   test_id: number
   score?: number
   ended_at?: Date
+  created_at: Date
+  updated_at: Date
+  user?: Profile
+}
+
+export interface Test {
+  id: number
+  level_id: number
+  mode_id: number
   created_at: Date
   updated_at: Date
 }
@@ -30,6 +41,7 @@ export interface Question {
 
 export interface StartGameResponse {
   result?: Result
+  test?: Test
   questions?: Array<Question>
 }
 
@@ -44,4 +56,20 @@ export interface SubmitResponse {
   isCorrect: boolean
   result: Result
   questions: Array<Question>
+}
+
+export interface Pagination<T>{
+  data: Array<T>
+  current_page: number
+  first_page_url: string
+  from: number
+  next_page_url: string|null
+  path: string
+  per_page: number
+  prev_page_url: string|null
+  to: number
+}
+
+export interface RankingResponse {
+  results: Pagination<Result>
 }
