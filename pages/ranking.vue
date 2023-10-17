@@ -4,6 +4,11 @@
       <div class="col-12 text-center">
         <img src="/text-peringkat.png" alt="Peringkat" /> <img src="/logo-crown.png" alt="Crown" />
       </div>
+
+      <div class="col-2 rankings align-bottom text-right">
+        <ButtonBack />
+      </div>
+
       <div class="col-8">
         <div class="card shadow mt-3 rankings overflow-y-auto">
           <div class="card-body">
@@ -31,6 +36,10 @@
             </table>
           </div>
         </div>
+      </div>
+
+      <div class="col-2 rankings align-bottom">
+        <ButtonPlay />
       </div>
     </div>
   </div>

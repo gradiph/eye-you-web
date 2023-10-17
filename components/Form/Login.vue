@@ -17,8 +17,9 @@ import { onMounted } from 'vue'
 
 const tab = useTab()
 const form = useFormLogin()
-const isLoading = ref(false)
 const router = useRouter()
+const isLoading = ref(false)
+const showSideMenu = useShowSideMenu()
 
 async function onSubmit() {
   isLoading.value = true
@@ -29,6 +30,7 @@ async function onSubmit() {
       html: '<img src="/berhasil-masuk.png" alt="login-success"/> Berhasil Masuk',
     })
     await router.push('/welcome')
+    showSideMenu.value = false
   }
 
   isLoading.value = false
