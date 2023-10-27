@@ -1,4 +1,4 @@
-import { Current, FormLogin, FormRegister, GameMode, Profile, Question, Result } from '~/types'
+import { Current, FormEditProfile, FormLogin, FormRegister, GameMode, Question, Result } from '~/types'
 
 const defaultFormLogin: FormLogin = {
   username: '',
@@ -11,6 +11,12 @@ const defaultFormRegister: FormRegister = {
   email: ''
 }
 
+const defaultFormEditProfile: FormEditProfile = {
+  name: '',
+  password: '',
+  password_confirmation: ''
+}
+
 const defaultCurrent: Current = {
   score: 0
 }
@@ -19,6 +25,7 @@ export const useToken = () => useState<string | undefined>('token', () => undefi
 export const useTab = () => useState<string>('sideMenuTab', () => 'login')
 export const useFormLogin = () => useState<FormLogin>('formLogin', () => defaultFormLogin)
 export const useFormRegister = () => useState<FormRegister>('formRegister', () => defaultFormRegister)
+export const useFormEditProfile = () => useState<FormEditProfile>('formEditProfile', () => defaultFormEditProfile)
 export const useGameModes = () => useState<GameMode[]>('gameMode', () => [])
 export const useShowSideMenu = () => useState<boolean>('showSideMenu', () => false)
 export const useQuestions = () => useState<Array<Question>>('questions', () => [])

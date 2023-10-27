@@ -2,7 +2,7 @@
   <div class="main-container container">
     <div class="main-card card">
       <div class="card-body">
-        <SideMenuProfile />
+        <SideMenuLoggedIn />
         <slot />
       </div>
     </div>

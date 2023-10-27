@@ -1,6 +1,13 @@
 <template>
   <form id="form-login" @submit.prevent="onSubmit">
-    <InputText v-model="form.username" placeholder="Username" form="form-login" />
+    <InputText v-model="form.username" placeholder="Username" form="form-login">
+      <template #icon>
+        <span class="input-group-text">
+          <Icon name="material-symbols:person" size="1.4em" />
+        </span>
+      </template>
+    </InputText>
+
     <InputPassword v-model="form.password" placeholder="Password" form="form-login" class="mt-4" />
 
     <div class="d-grid mt-5">
@@ -31,6 +38,7 @@ async function onSubmit() {
     })
     await router.push('/welcome')
     showSideMenu.value = false
+    useFetchProfile()
   }
 
   isLoading.value = false

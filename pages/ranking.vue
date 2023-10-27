@@ -5,8 +5,9 @@
         <img src="/text-peringkat.png" alt="Peringkat" /> <img src="/logo-crown.png" alt="Crown" />
       </div>
 
-      <div class="col-2 rankings align-bottom text-right">
-        <ButtonBack />
+      <div class="col-2 rankings align-bottom text-right text-secondary fw-bolder font-small">
+        <ButtonBack /> <br />
+        Halaman Utama
       </div>
 
       <div class="col-8">
@@ -38,8 +39,9 @@
         </div>
       </div>
 
-      <div class="col-2 rankings align-bottom">
-        <ButtonPlay />
+      <div class="col-2 rankings align-bottom text-secondary fw-bolder font-small">
+        <ButtonPlay /> <br />
+        Main lagi?
       </div>
     </div>
   </div>
@@ -63,4 +65,7 @@ onMounted(async () => {
 
 .rankings
   height: 350px
+
+.font-small
+  font-size: 0.7em
 </style>
