@@ -26,8 +26,8 @@
                       <div
                         class="progress-bar"
                         role="progressbar"
-                        style="width: 25%;"
-                        aria-valuenow="25"
+                        :style="progressbarStyle"
+                        :aria-valuenow="timeLeft"
                         aria-valuemin="0"
                         aria-valuemax="100"
                       ></div>
@@ -78,29 +78,62 @@ const current = useCurrent()
 const questions = useQuestions()
 const router = useRouter()
 const rc = useRuntimeConfig()
+let timer: NodeJS.Timeout | undefined = undefined
 
+const isLoading = ref<boolean>(false)
 const testNumber = computed(() => indexOf(questions.value, current.value.question) + 1)
 const score = computed(() => current.value.score)
 const question = computed(() => current.value?.question as Question)
 const questionImage = computed(() => rc.public.apiBaseUrl + question.value.image)
 const answers = computed(() => question.value?.answers || [])
 const resultId = computed(() => (current.value.result as Result).id)
+const timeLeft = ref<number>(0)
+const timeLeftPercent = computed(() => Math.ceil(timeLeft.value * 100 / question.value.duration))
+const progressbarStyle = computed(() => `width: ${timeLeftPercent.value}%;`)
 
-async function selectAnswer(answer: Answer) {
-  const form: FormSubmit = {
-    resultId: resultId.value,
-    answerId: answer.id,
-    questionId: question.value.id
-  }
-  const result = await useFetchSubmit(form)
-  if (isNull(result)) {
-    router.push('/ranking')
+async function selectAnswer(answer: Answer|undefined = undefined) {
+  if (!isLoading.value) {
+    isLoading.value = true
+    clearInterval(timer)
+    const form: FormSubmit = {
+      resultId: resultId.value,
+      answerId: answer?.id || null,
+      questionId: question.value.id
+    }
+    const result = await useFetchSubmit(form)
+    isLoading.value = false
+    if (isNull(result)) {
+      router.push('/ranking')
+    } else {
+      startTimer()
+    }
   }
 }
 
 function answerImage(answer: Answer) {
   return rc.public.apiBaseUrl + answer.image
 }
+
+function startTimer() {
+  timer = setInterval(async () => {
+    console.log('timer is ticking...', timeLeft.value)
+    timeLeft.value = timeLeft.value - 0.1
+    if (timeLeft.value <= 0) {
+      clearInterval(timer)
+      await selectAnswer()
+    }
+  }, 100)
+}
+
+watch(question, (newVal) => {
+  if (newVal !== undefined) {
+    timeLeft.value = newVal.duration
+    clearInterval(timer)
+    startTimer()
+  }
+}, {
+  immediate: true
+})
 </script>
 
 <style scoped lang="sass">

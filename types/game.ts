@@ -48,7 +48,7 @@ export interface StartGameResponse {
 export interface FormSubmit {
   resultId: number
   questionId: number
-  answerId: number
+  answerId: number | null
 }
 
 export interface SubmitResponse {

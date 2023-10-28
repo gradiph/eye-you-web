@@ -11,6 +11,7 @@ export default defineNuxtConfig({
           charset: "utf-8"
         }
       ],
+      title: 'IU - Color Blind Game'
     },
   },
   css: [
