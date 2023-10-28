@@ -12,8 +12,8 @@
       <div class="offcanvas-body d-flex justify-content-center">
         <div class="w-75 row g-0">
           <div class="col-12">
-            <img src="/logo.png" alt="IU-logo">
-            <img src="/logo-text.png" alt="IU-logo-text">
+            <img src="/logo.png" alt="IU-logo" class="iu-logo">
+            <img src="/logo-text.png" alt="IU-logo-text" class="iu-text">
           </div>
 
           <div class="col-12 text-primary fw-semibold fst-italic text-center">
@@ -86,3 +86,11 @@ onMounted(() => {
   })
 })
 </script>
+
+<style scoped lang="sass">
+.iu-logo
+  width: 60%
+
+.iu-text
+  width: 40%
+</style>

@@ -4,10 +4,8 @@
             <div class="col-6 d-flex justify-content-end">
                 <img src="/logo.png" alt="IU-Logo" class="logo-main">
             </div>
-            <div class="col-6">
-                <img src="/logo-text.png" alt="IU-Logo-Text" width="146" height="98">
-            </div>
-            <div class="col-6 offset-6 subtitle text-secondary">
+            <div class="col-6 subtitle text-secondary pt-5">
+                <img src="/logo-text.png" alt="IU-Logo-Text" width="146" height="98" class="mt-3"> <br />
                 COLOR BLIND GAME
             </div>
         </div>
