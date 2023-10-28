@@ -1,10 +1,10 @@
 <template>
   <div class="row">
-    <div class="col-12">
+    <div class="col-12 text-center">
       <form id="form-edit-profile" @submit.prevent="onSubmit()">
-        <img :src="current.profile.avatar" alt="avatar" class="avatar" />
-        <InputText v-model="form.name" placeholder="Ganti Nama" form="form-edit-profile" />
-        <InputPassword v-model="form.password" placeholder="Ganti Kata Sandi" form="form-edit-profile" />
+        <img :src="current.profile.avatar" alt="avatar" class="avatar mb-5" />
+        <InputText v-model="form.name" placeholder="Ganti Nama" form="form-edit-profile" class="mb-2" />
+        <InputPassword v-model="form.password" placeholder="Ganti Kata Sandi" form="form-edit-profile" class="mb-2" />
         <InputPassword v-model="form.password_confirmation" placeholder="Ulangi Kata Sandi" form="form-edit-profile" />
       </form>
     </div>
@@ -21,6 +21,7 @@ const current = useCurrent()
 const form = useFormEditProfile()
 
 async function onSubmit() {
+  console.log('onSubmitEditProfile')
   emit('submit')
 }
 </script>

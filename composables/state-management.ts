@@ -17,7 +17,7 @@ const defaultFormEditProfile: FormEditProfile = {
   password_confirmation: ''
 }
 
-const defaultCurrent: Current = {
+export const defaultCurrent: Current = {
   score: 0
 }
 

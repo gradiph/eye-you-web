@@ -7,7 +7,7 @@
       :placeholder="placeholder"
       class="form-control shadow-sm"
     />
-    <span class="input-group-text"><Icon name="mdi:lock" size="1.4em" /></span>
+    <slot name="icon"></slot>
   </div>
 </template>
 

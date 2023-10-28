@@ -8,7 +8,13 @@
       </template>
     </InputText>
 
-    <InputPassword v-model="form.password" placeholder="Password" form="form-login" class="mt-4" />
+    <InputPassword v-model="form.password" placeholder="Password" form="form-login" class="mt-4">
+      <template #icon>
+        <span class="input-group-text">
+          <Icon name="mdi:lock" size="1.4em" />
+        </span>
+      </template>
+    </InputPassword>
 
     <div class="d-grid mt-5">
       <button type="submit" class="btn btn-primary" :disabled="isLoading">Masuk</button>

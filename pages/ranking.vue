@@ -6,7 +6,7 @@
       </div>
 
       <div class="col-2 rankings align-bottom text-right text-secondary fw-bolder font-small">
-        <ButtonBack /> <br />
+        <ButtonBack @click="router.push('/welcome')" /> <br />
         Halaman Utama
       </div>
 
@@ -40,7 +40,7 @@
       </div>
 
       <div class="col-2 rankings align-bottom text-secondary fw-bolder font-small">
-        <ButtonPlay /> <br />
+        <ButtonPlay @click="router.push('/select-mode')" /> <br />
         Main lagi?
       </div>
     </div>
@@ -48,6 +48,7 @@
 </template>
 
 <script setup lang="ts">
+const router = useRouter()
 const results = useResults()
 
 onMounted(async () => {
