@@ -104,8 +104,6 @@ async function selectAnswer(answer: Answer|undefined = undefined) {
     isLoading.value = false
     if (isNull(result)) {
       router.push('/ranking')
-    } else {
-      startTimer()
     }
   }
 }
@@ -115,8 +113,9 @@ function answerImage(answer: Answer) {
 }
 
 function startTimer() {
+  console.log('start timer for ', question.value)
   timer = setInterval(async () => {
-    console.log('timer is ticking...', timeLeft.value)
+    console.log('timer is ticking...', timeLeft.value, timer)
     timeLeft.value = timeLeft.value - 0.1
     if (timeLeft.value <= 0) {
       clearInterval(timer)
@@ -125,10 +124,10 @@ function startTimer() {
   }, 100)
 }
 
-watch(question, (newVal) => {
-  if (newVal !== undefined) {
-    timeLeft.value = newVal.duration
+watch(question, (newVal, oldVal) => {
+  if (newVal !== undefined && newVal !== oldVal) {
     clearInterval(timer)
+    timeLeft.value = newVal.duration
     startTimer()
   }
 }, {
