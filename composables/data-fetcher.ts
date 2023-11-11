@@ -152,6 +152,7 @@ export const useFetchSubmit = async (body: FormSubmit): Promise<boolean|null> =>
     headers: headers.value,
     method
   })
+  useFetchProfile()
   if (isNull(error.value)) {
     current.value.result = data.value?.result
     const nextIndex = indexOf(questions.value, current.value.question) + 1
