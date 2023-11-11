@@ -28,6 +28,7 @@ const showEditMenu = ref(false)
 const showSideMenu = useShowSideMenu()
 
 watch(showSideMenu, (newVal) => {
+  console.log('showSideMenu', newVal)
   if (canvas.value !== null) {
     const offcanvas = Offcanvas.getOrCreateInstance(canvas.value)
     if (newVal === false) {
@@ -41,6 +42,9 @@ onMounted(async () => {
   await useFetchProfile()
   showEditMenu.value = false
 
-  const offcanvas = Offcanvas.getOrCreateInstance(canvas.value)
+  const offcanvas = document.getElementById('side-menu')
+  offcanvas.addEventListener('hidden.bs.offcanvas', event => {
+    showEditMenu.value = false
+  })
 })
 </script>

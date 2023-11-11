@@ -2,12 +2,14 @@
   <div class="main-content mx-auto">
     <div class="row d-flex justify-content-center">
       <div class="col-12 text-center">
-        <img src="/text-peringkat.png" alt="Peringkat" /> <img src="/logo-crown.png" alt="Crown" />
+        <img src="/text-peringkat.png" alt="Peringkat" class="text-peringkat" /> <img src="/logo-crown.png" alt="Crown" class="logo-crown" />
       </div>
 
-      <div class="col-2 rankings align-bottom text-right text-secondary fw-bolder font-small">
-        <ButtonBack @click="router.push('/welcome')" /> <br />
-        Halaman Utama
+      <div class="col-2 rankings text-secondary fw-bolder font-small">
+        <div class="position-absolute bottom-0 text-center">
+          <ButtonBack @click="router.push('/welcome')" /> <br />
+          Halaman Utama
+        </div>
       </div>
 
       <div class="col-8">
@@ -39,9 +41,11 @@
         </div>
       </div>
 
-      <div class="col-2 rankings align-bottom text-secondary fw-bolder font-small">
-        <ButtonPlay @click="router.push('/select-mode')" /> <br />
-        Main lagi?
+      <div class="col-2 text-secondary fw-bolder font-small">
+        <div class="position-absolute bottom-0">
+          <ButtonPlay @click="router.push('/select-mode')" /> <br />
+          Main lagi?
+        </div>
       </div>
     </div>
   </div>
@@ -65,8 +69,14 @@ onMounted(async () => {
   height: 50px
 
 .rankings
-  height: 350px
+  height: calc(100vh - 70%)
 
 .font-small
   font-size: 0.7em
+
+.text-peringkat
+  width: 15vw
+
+.logo-crown
+  width: 4vw
 </style>
