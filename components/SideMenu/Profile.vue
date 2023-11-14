@@ -1,17 +1,17 @@
 <template>
   <div class="row">
     <div class="col-auto">
-      <img :src="current.profile.avatar" alt="avatar" class="avatar" />
+      <img :src="current.profile?.avatar" alt="avatar" class="avatar" />
     </div>
     <div class="col">
       <div class="card shadow">
         <div class="card-body text-primary">
-          {{ current.profile.name }}
+          {{ current.profile?.name }}
         </div>
       </div>
       <div class="card shadow mt-1">
         <div class="card-body text-primary">
-          {{ current.profile.email }}
+          {{ current.profile?.email }}
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
     <div class="col-12 mt-2">
       <div class="card shadow">
         <div class="card-body text-primary fw-bolder text-center">
-          Total Skor : <span class="text-secondary fw-bolder">{{ current.profile.total_score }}</span>
+          Total Skor : <span class="text-secondary fw-bolder">{{ current.profile?.total_score || 0 }}</span>
         </div>
       </div>
     </div>
@@ -40,9 +40,9 @@
                 <figcaption class="figure-caption text-center text-primary">Berhasil masuk!</figcaption>
               </figure>
             </div> -->
-            <div v-for="achievement in current.profile.achievements" :key="achievement.id" class="col-6 text-center">
+            <div v-for="achievement in current.profile?.achievements || []" :key="achievement.id" class="col-6 text-center">
               <figure class="figure text-center">
-                <img :src="achievement.image" class="figure-img img-fluid rounded shadow" :alt="achievement.name" />
+                <img :src="getImageUrl(achievement)" class="figure-img img-fluid rounded" :alt="achievement.name" />
                 <figcaption class="figure-caption text-center text-primary">{{ achievement.name }}</figcaption>
               </figure>
             </div>
@@ -57,8 +57,15 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { Achievement } from '~/types';
+
 const current = useCurrent()
+const rc = useRuntimeConfig()
+
+function getImageUrl(achievement: Achievement) {
+  return rc.public.apiBaseUrl + achievement.image
+}
 </script>
 
 <style scoped lang="sass">
