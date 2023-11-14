@@ -160,6 +160,7 @@ export const useFetchSubmit = async (body: FormSubmit): Promise<boolean|null> =>
       return null
     } else {
       current.value.question = useQuestions().value[nextIndex]
+      current.value.score = current.value.result?.score || 0
       return true
     }
   } else {
