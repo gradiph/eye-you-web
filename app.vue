@@ -7,8 +7,5 @@
 </template>
 
 <script setup>
-const profile = computed(() => {
-  return useCurrent().value.profile
-})
-const layout = computed(() => profile.value === undefined ? 'default' : 'logged-in')
+const layout = computed(() => useToken().value === undefined ? 'default' : 'logged-in')
 </script>

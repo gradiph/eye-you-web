@@ -52,19 +52,29 @@
     </div>
 
     <div class="col-12 mt-5 d-grid">
-      <button class="btn btn-danger text-light fw-bolder" type="button">Keluar</button>
+      <button class="btn btn-danger text-light fw-bolder" type="button" @click="logout()">Keluar</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { keyStorageToken } from '~/middleware/auth-middleware.global';
 import { Achievement } from '~/types';
 
 const current = useCurrent()
 const rc = useRuntimeConfig()
+const router = useRouter()
+const showSideMenu = useShowSideMenu()
 
 function getImageUrl(achievement: Achievement) {
   return rc.public.apiBaseUrl + achievement.image
+}
+
+function logout() {
+  useToken().value = undefined
+  localStorage.removeItem(keyStorageToken)
+  showSideMenu.value = false
+  router.push('/')
 }
 </script>
 

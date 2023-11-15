@@ -16,6 +16,7 @@ import {
   Test
 } from '~/types'
 import { useResults } from './state-management'
+import { keyStorageToken } from '~/middleware/auth-middleware.global'
 
 const rc = useRuntimeConfig()
 const token = useToken()
@@ -36,6 +37,7 @@ export const useFetchLogin = async (body: FormLogin): Promise<boolean> => {
   if (isNull(error.value)) {
     if (data.value?.token) {
       useToken().value = data.value?.token
+      localStorage.setItem(keyStorageToken, data.value?.token)
       return true
     } else {
       useToastClient({
