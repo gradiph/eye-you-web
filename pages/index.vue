@@ -1,5 +1,5 @@
 <template>
-    <div class="h-100 align-middle">
+    <div>
         <div class="row g-0">
             <div class="col-6 d-flex justify-content-end">
                 <img src="/logo.png" alt="IU-Logo" class="logo-main">

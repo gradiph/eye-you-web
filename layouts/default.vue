@@ -1,10 +1,6 @@
 <template>
-  <div class="main-container container">
-    <div class="main-card card">
-      <div class="card-body">
-        <SideMenuGuest />
-        <slot />
-      </div>
-    </div>
+  <div class="main-container">
+    <SideMenuGuest />
+    <slot />
   </div>
 </template>

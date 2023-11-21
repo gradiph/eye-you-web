@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <a class="ms-3 mt-5" data-bs-toggle="offcanvas" href="#side-menu" role="button" aria-controls="side-menu">
+  <div class="w-100">
+    <a class="position-absolute top-5 start-5" data-bs-toggle="offcanvas" href="#side-menu" role="button" aria-controls="side-menu">
       <img src="/menu-icon.png" alt="Menu" />
     </a>
 
@@ -48,3 +48,11 @@ onMounted(async () => {
   })
 })
 </script>
+
+<style scoped lang="sass">
+.top-5
+  top: 5%
+
+.start-5
+  left: 5%
+</style>
