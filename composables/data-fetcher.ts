@@ -23,7 +23,10 @@ const token = useToken()
 
 const baseURL = computed(() => rc.public.apiBaseUrl)
 const headers = computed(() => {
-  return { Authorization: `Bearer ${token.value}` }
+  return {
+    Authorization: `Bearer ${token.value}`,
+    'ngrok-skip-browser-warning': '1'
+  }
 })
 const method = 'post'
 
