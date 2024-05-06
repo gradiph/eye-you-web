@@ -103,7 +103,7 @@ async function selectAnswer(answer: Answer|undefined = undefined) {
     const result = await useFetchSubmit(form)
     isLoading.value = false
     if (isNull(result)) {
-      router.push('/ranking')
+      router.push('/result')
     }
   }
 }

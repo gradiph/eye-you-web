@@ -9,6 +9,8 @@ export interface Result {
   created_at: Date
   updated_at: Date
   user?: Profile
+  test?: Test
+  questions?: Array<Question>
 }
 
 export interface Test {
@@ -72,4 +74,18 @@ export interface Pagination<T>{
 
 export interface RankingResponse {
   results: Pagination<Result>
+}
+
+export interface Analyzes {
+  total_questions: number
+  total_correct: number
+  total_wrong: number
+  accuracy: number
+  title: string
+  description: string
+}
+
+export interface ResultResponse {
+  result: Result
+  analyzes: Analyzes
 }

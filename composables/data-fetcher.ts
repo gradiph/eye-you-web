@@ -11,6 +11,7 @@ import {
   RankingResponse,
   RegisterResponse,
   Result,
+  ResultResponse,
   StartGameResponse,
   SubmitResponse,
   Test
@@ -196,6 +197,27 @@ export const useFetchResults = async (): Promise<boolean> => {
   })
   if (isNull(error.value)) {
     results.value = data.value?.results.data || []
+    return true
+  } else {
+    useToastClient({
+      title: 'Terjadi kesalahan',
+      text: error.value?.message
+    })
+    return false
+  }
+}
+
+export const useFetchResult = async (): Promise<boolean> => {
+  const current = useCurrent()
+
+  const url = `/user/game/result/${current.value?.result?.id}`
+  const { data, error } = await useFetch<ResultResponse>(url, {
+    baseURL: baseURL.value,
+    headers: authHeaders.value,
+    method: 'GET'
+  })
+  if (isNull(error.value)) {
+    current.value.analyzes = data.value?.analyzes
     return true
   } else {
     useToastClient({

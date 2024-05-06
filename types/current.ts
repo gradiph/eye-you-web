@@ -1,4 +1,4 @@
-import { Question, Result, Test } from './game'
+import { Analyzes, Question, Result, Test } from './game'
 import { GameMode } from './game-mode'
 import { Profile } from './profile'
 
@@ -9,4 +9,5 @@ export interface Current {
   result?: Result
   profile?: Profile
   test?: Test
+  analyzes?: Analyzes
 }
