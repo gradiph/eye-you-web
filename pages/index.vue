@@ -4,13 +4,13 @@
             <div class="col-6 d-flex justify-content-end">
                 <img src="/logo.png" alt="IU-Logo" class="logo-main">
             </div>
-            <div class="col-6 subtitle text-secondary pt-5">
-                <img src="/logo-text.png" alt="IU-Logo-Text" width="146" height="98" class="mt-3"> <br />
-                COLOR BLIND GAME
+            <div class="col-6 pt-5">
+                <div class="title text-primary">IU</div>
+                <div class="subtitle text-secondary">COLOR BLIND GAME</div>
             </div>
         </div>
 
-        <div class="row gy-1">
+        <div class="row mt-4 gy-1">
             <div class="col-12 text-center">
                 <ButtonPlay data-bs-toggle="offcanvas" href="#side-menu" />
             </div>
@@ -34,6 +34,17 @@ function openCanvas() {
 .logo-main
     width: 274px
     height: auto
+    position: relative
+    left: 40px
+    top: 13px
+
+.title
+    font-family: CakeCafe
+    font-size: 5em
+    letter-spacing: 0.2em
+
+.subtitle
+    font-size: 1.2em
 
 .play-instruction
     font-family: Inter

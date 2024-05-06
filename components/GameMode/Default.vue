@@ -19,7 +19,7 @@ defineProps(['title', 'image', 'alt'])
 <style scoped lang="sass">
 .game-mode
   background-color: #292929
-  width: 47.62%
+  width: 27.62%
 
 .mode-image
   width: 74.26%

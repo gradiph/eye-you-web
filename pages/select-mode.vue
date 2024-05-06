@@ -1,7 +1,7 @@
 <template>
-  <div class="row gx-0 gy-4">
-    <div class="col-12 d-flex justify-content-center">
-      <img src="/select-mode.png" alt="Select Game Mode">
+  <div class="row gx-0">
+    <div class="col-12 text-center text-primary title">
+      " Mode Permainan "
     </div>
 
     <div v-for="mode in gameModes" :key="mode.id" class="col d-flex justify-content-center">
@@ -12,6 +12,10 @@
         :title="mode.name"
         class="clickable"
       />
+    </div>
+
+    <div class="instruction text-primary text-center mt-2">
+      Info : Tes terdiri dari 15 soal berwaktu!
     </div>
   </div>
 </template>
@@ -41,3 +45,19 @@ async function startGame(mode: GameMode) {
   }
 }
 </script>
+
+<style scoped lang="sass">
+.title
+  font-family: CakeCafe
+  font-size: 3em
+
+.quote
+  font-size: 5em
+  line-height: 0.2em
+
+.instruction
+  font-family: Inter
+  font-size: 1.2em
+  font-style: italic
+  font-weight: 600
+</style>

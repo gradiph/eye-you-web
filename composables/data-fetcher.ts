@@ -22,7 +22,12 @@ const rc = useRuntimeConfig()
 const token = useToken()
 
 const baseURL = computed(() => rc.public.apiBaseUrl)
-const headers = computed(() => {
+const basicHeaders = computed(() => {
+  return {
+    'ngrok-skip-browser-warning': '1'
+  }
+})
+const authHeaders = computed(() => {
   return {
     Authorization: `Bearer ${token.value}`,
     'ngrok-skip-browser-warning': '1'
@@ -36,6 +41,7 @@ export const useFetchLogin = async (body: FormLogin): Promise<boolean> => {
     method,
     baseURL,
     body,
+    headers: basicHeaders.value
   })
   if (isNull(error.value)) {
     if (data.value?.token) {
@@ -64,6 +70,7 @@ export const useFetchRegister = async (body: FormRegister): Promise<boolean> => 
     method,
     baseURL: baseURL.value,
     body,
+    headers: basicHeaders.value
   })
   if (isNull(error.value)) {
     if (data?.value?.user) {
@@ -87,7 +94,7 @@ export const useFetchProfile = async (): Promise<boolean> => {
   const url = '/user/profile'
   const { data, error } = await useFetch<GetProfileResponse>(url, {
     baseURL: baseURL.value,
-    headers: headers.value,
+    headers: authHeaders.value
   })
   if (isNull(error.value)) {
     useCurrent().value.profile = data.value?.user
@@ -105,7 +112,7 @@ export const useFetchModes = async (): Promise<boolean> => {
   const url = '/user/game/modes'
   const { data, error } = await useFetch<GameModesResponse>(url, {
     baseURL: baseURL.value,
-    headers: headers.value,
+    headers: authHeaders.value
   })
   if (isNull(error.value)) {
     useGameModes().value = data.value?.modes as Array<GameMode>
@@ -128,7 +135,7 @@ export const useFetchQuestions = async (modeId: number): Promise<boolean> => {
   const { data, error } = await useFetch<StartGameResponse>(url, {
     baseURL: baseURL.value,
     body,
-    headers: headers.value,
+    headers: authHeaders.value,
     method
   })
   if (isNull(error.value)) {
@@ -154,7 +161,7 @@ export const useFetchSubmit = async (body: FormSubmit): Promise<boolean|null> =>
   const { data, error } = await useFetch<SubmitResponse>(url, {
     baseURL: baseURL.value,
     body,
-    headers: headers.value,
+    headers: authHeaders.value,
     method
   })
   useFetchProfile()
@@ -184,7 +191,7 @@ export const useFetchResults = async (): Promise<boolean> => {
   const url = `/user/ranking/${current.value.test?.id}`
   const { data, error } = await useFetch<RankingResponse>(url, {
     baseURL: baseURL.value,
-    headers: headers.value,
+    headers: authHeaders.value,
     method: 'GET'
   })
   if (isNull(error.value)) {
