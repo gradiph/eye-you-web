@@ -50,22 +50,54 @@
               </div>
 
               <div class="col-6">
-                <div class="float-start">
-                  <img src="/quotation-mark.png" />
-                </div>
-
-                <div class="clearfix"></div>
-
                 <div class="row row-answer mx-auto g-0 text-light">
-                  
-                  <div v-for="answer in answers" :key="answer.id" class="col-12 col-md-4 text-center">
-                    <img @click="selectAnswer(answer)" :src="answerImage(answer)" :alt="answer.alt_text"
-                      :title="answer.alt_text" class="clickable answer-image" />
-                  </div>
-                </div>
-                
-                <div class="float-end">
-                  <img src="/quotation-mark.png" />
+                  <div class="font-inter text-center">Masukkan Jawaban Anda</div>
+                  <input v-model="answer" class="input-answer text-center bg-dark border-top-0 border-start-0 border-end-0 border-bottom-3 border-light text-light font-cake fs-1" disabled type="text" readonly>
+                  <table class="mt-2 text-center">
+                    <tr>
+                      <td class="pb-2">
+                        <button @click="append('1')" class="btn btn-lg rounded-circle bg-primary font-cake fs-3 px-4 text-light">1</button>
+                      </td>
+                      <td class="pb-2">
+                        <button @click="append('2')" class="btn btn-lg rounded-circle bg-primary font-cake fs-3 px-4 text-light">2</button>
+                      </td>
+                      <td class="pb-2">
+                        <button @click="append('3')" class="btn btn-lg rounded-circle bg-primary font-cake fs-3 px-4 text-light">3</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="pb-2">
+                        <button @click="append('4')" class="btn btn-lg rounded-circle bg-primary font-cake fs-3 px-4 text-light">4</button>
+                      </td>
+                      <td class="pb-2">
+                        <button @click="append('5')" class="btn btn-lg rounded-circle bg-primary font-cake fs-3 px-4 text-light">5</button>
+                      </td>
+                      <td class="pb-2">
+                        <button @click="append('6')" class="btn btn-lg rounded-circle bg-primary font-cake fs-3 px-4 text-light">6</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="pb-2">
+                        <button @click="append('7')" class="btn btn-lg rounded-circle bg-primary font-cake fs-3 px-4 text-light">7</button>
+                      </td>
+                      <td class="pb-2">
+                        <button @click="append('8')" class="btn btn-lg rounded-circle bg-primary font-cake fs-3 px-4 text-light">8</button>
+                      </td>
+                      <td class="pb-2">
+                        <button @click="append('9')" class="btn btn-lg rounded-circle bg-primary font-cake fs-3 px-4 text-light">9</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <button @click="append('0')" class="btn btn-lg rounded-circle bg-primary font-cake fs-3 px-4 text-light">0</button>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </table>
+                  <button @click="submitAnswer()" class="btn btn-danger text-light fw-bolder mt-2">Konfirmasi</button>
                 </div>
               </div>
             </div>
@@ -96,6 +128,7 @@ const resultId = computed(() => (current.value.result as Result).id)
 const timeLeft = ref<number>(0)
 const timeLeftPercent = computed(() => Math.ceil(timeLeft.value * 100 / question.value.duration))
 const progressbarStyle = computed(() => `width: ${timeLeftPercent.value}%;`)
+const answer = ref<string>('')
 
 async function selectAnswer(answer: Answer|undefined = undefined) {
   if (!isLoading.value) {
@@ -114,11 +147,6 @@ async function selectAnswer(answer: Answer|undefined = undefined) {
   }
 }
 
-function answerImage(answer: Answer) {
-  // return rc.public.apiBaseUrl + answer.image
-  return answer.image
-}
-
 function startTimer() {
   timer = setInterval(async () => {
     timeLeft.value = timeLeft.value - 0.1
@@ -129,11 +157,33 @@ function startTimer() {
   }, 100)
 }
 
+function append(val: string) {
+  answer.value = answer.value + val
+}
+
+async function submitAnswer() {
+  if (!isLoading.value) {
+    isLoading.value = true
+    clearInterval(timer)
+    const form: FormSubmit = {
+      resultId: resultId.value,
+      answerText: answer.value,
+      questionId: question.value.id
+    }
+    const result = await useFetchSubmit(form)
+    isLoading.value = false
+    answer.value = ''
+    if (isNull(result)) {
+      router.push('/result')
+    }
+  }
+}
+
 watch(question, (newVal, oldVal) => {
   if (newVal !== undefined && newVal !== oldVal) {
     clearInterval(timer)
     timeLeft.value = newVal.duration
-    startTimer()
+    // startTimer()
   }
 }, {
   immediate: true
@@ -169,4 +219,14 @@ watch(question, (newVal, oldVal) => {
 
 .font-cake
   font-family: CakeCafe
+
+.font-inter
+  font-family: Inter
+
+.input-answer
+  margin-left: auto
+  margin-right: auto
+
+.border-bottom-3
+  border-bottom-width: 0.1em
 </style>
