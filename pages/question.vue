@@ -44,7 +44,7 @@
               <div class="col-6">
                 <div class="card bg-dark ms-auto mb-3 question-image">
                   <div class="card-body">
-                    <img :src="questionImage" class="img-fluid" />
+                    <img :src="questionImage" class="img-fluid mt-5" />
                   </div>
                 </div>
               </div>
@@ -94,6 +94,7 @@
                         <button @click="append('0')" class="btn btn-lg rounded-circle bg-primary font-cake fs-3 px-4 text-light">0</button>
                       </td>
                       <td>
+                        <button @click="answer = ''" class="btn btn-lg rounded-circle bg-secondary font-cake fs-3 px-c text-dark">C</button>
                       </td>
                     </tr>
                   </table>
@@ -123,7 +124,7 @@ const testNumber = computed(() => indexOf(questions.value, current.value.questio
 const score = computed(() => current.value.score)
 const question = computed(() => current.value?.question as Question)
 const questionImage = computed(() => question.value.image)
-const answers = computed(() => question.value?.answers || [])
+// const answers = computed(() => question.value?.answers || [])
 const resultId = computed(() => (current.value.result as Result).id)
 const timeLeft = ref<number>(0)
 const timeLeftPercent = computed(() => Math.ceil(timeLeft.value * 100 / question.value.duration))
@@ -152,13 +153,15 @@ function startTimer() {
     timeLeft.value = timeLeft.value - 0.1
     if (timeLeft.value <= 0) {
       clearInterval(timer)
-      await selectAnswer()
+      // await selectAnswer()
+      await submitAnswer()
     }
   }, 100)
 }
 
 function append(val: string) {
-  answer.value = answer.value + val
+  if (answer.value.length < 2)
+    answer.value = answer.value + val
 }
 
 async function submitAnswer() {
@@ -167,7 +170,7 @@ async function submitAnswer() {
     clearInterval(timer)
     const form: FormSubmit = {
       resultId: resultId.value,
-      answerText: answer.value,
+      answerText: parseInt(answer.value).toLocaleString(),
       questionId: question.value.id
     }
     const result = await useFetchSubmit(form)
@@ -183,7 +186,7 @@ watch(question, (newVal, oldVal) => {
   if (newVal !== undefined && newVal !== oldVal) {
     clearInterval(timer)
     timeLeft.value = newVal.duration
-    // startTimer()
+    startTimer()
   }
 }, {
   immediate: true
@@ -229,4 +232,8 @@ watch(question, (newVal, oldVal) => {
 
 .border-bottom-3
   border-bottom-width: 0.1em
+
+.px-c
+  padding-left: 1.1rem !important
+  padding-right: 1.1rem !important
 </style>
