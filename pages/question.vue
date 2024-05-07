@@ -56,7 +56,8 @@
 
                 <div class="clearfix"></div>
 
-                <div class="row row-answer mx-auto g-0">
+                <div class="row row-answer mx-auto g-0 text-light">
+                  
                   <div v-for="answer in answers" :key="answer.id" class="col-12 col-md-4 text-center">
                     <img @click="selectAnswer(answer)" :src="answerImage(answer)" :alt="answer.alt_text"
                       :title="answer.alt_text" class="clickable answer-image" />
@@ -82,14 +83,14 @@ import { Answer, FormSubmit, Question, Result } from '~/types';
 const current = useCurrent()
 const questions = useQuestions()
 const router = useRouter()
-const rc = useRuntimeConfig()
+// const rc = useRuntimeConfig()
 let timer: NodeJS.Timeout | undefined = undefined
 
 const isLoading = ref<boolean>(false)
 const testNumber = computed(() => indexOf(questions.value, current.value.question) + 1)
 const score = computed(() => current.value.score)
 const question = computed(() => current.value?.question as Question)
-const questionImage = computed(() => rc.public.apiBaseUrl + question.value.image)
+const questionImage = computed(() => question.value.image)
 const answers = computed(() => question.value?.answers || [])
 const resultId = computed(() => (current.value.result as Result).id)
 const timeLeft = ref<number>(0)
@@ -114,13 +115,12 @@ async function selectAnswer(answer: Answer|undefined = undefined) {
 }
 
 function answerImage(answer: Answer) {
-  return rc.public.apiBaseUrl + answer.image
+  // return rc.public.apiBaseUrl + answer.image
+  return answer.image
 }
 
 function startTimer() {
-  console.log('start timer for ', question.value)
   timer = setInterval(async () => {
-    console.log('timer is ticking...', timeLeft.value, timer)
     timeLeft.value = timeLeft.value - 0.1
     if (timeLeft.value <= 0) {
       clearInterval(timer)

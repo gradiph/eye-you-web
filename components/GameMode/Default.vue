@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 const props = defineProps(['title', 'image', 'alt'])
-useFetchImage(props.image || '')
 </script>
 
 <style scoped lang="sass">

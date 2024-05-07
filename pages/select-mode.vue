@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { GameMode } from '~/types'
 
-const rc = useRuntimeConfig()
+// const rc = useRuntimeConfig()
 const gameModes = useGameModes()
 const router = useRouter()
 const current = useCurrent()
@@ -33,7 +33,8 @@ onMounted(async () => {
 })
 
 function getModeImage(mode: GameMode): string {
-  return rc.public.apiBaseUrl + mode.image
+  // return rc.public.apiBaseUrl + mode.image
+  return mode.image
 }
 
 async function startGame(mode: GameMode) {
