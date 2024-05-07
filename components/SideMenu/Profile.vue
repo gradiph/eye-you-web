@@ -70,6 +70,10 @@ function getImageUrl(achievement: Achievement) {
   return rc.public.apiBaseUrl + achievement.image
 }
 
+function getAvatarUrl(avatar: string) {
+  return rc.public.apiBaseUrl + '/images' + avatar
+}
+
 function logout() {
   useToken().value = undefined
   localStorage.removeItem(keyStorageToken)

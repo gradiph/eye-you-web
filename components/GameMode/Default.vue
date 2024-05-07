@@ -13,7 +13,8 @@
 </template>
 
 <script setup lang="ts">
-defineProps(['title', 'image', 'alt'])
+const props = defineProps(['title', 'image', 'alt'])
+useFetchImage(props.image || '')
 </script>
 
 <style scoped lang="sass">

@@ -210,6 +210,10 @@ export const useFetchResults = async (): Promise<boolean> => {
 export const useFetchResult = async (): Promise<boolean> => {
   const current = useCurrent()
 
+  if (!current.value?.result?.id) {
+    useRouter().push(useToken().value ? '/welcome' : '/')
+    return false
+  }
   const url = `/user/game/result/${current.value?.result?.id}`
   const { data, error } = await useFetch<ResultResponse>(url, {
     baseURL: baseURL.value,
@@ -226,4 +230,14 @@ export const useFetchResult = async (): Promise<boolean> => {
     })
     return false
   }
+}
+
+export const useFetchImage = async (path: string) => {
+  const { data, error } = await useFetch(path, {
+    baseURL: baseURL.value,
+    headers: basicHeaders.value,
+    method: 'GET'
+  })
+  console.log('fetchImage:data', data)
+  console.log('fetchImage:error', error)
 }

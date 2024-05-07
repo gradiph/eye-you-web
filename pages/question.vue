@@ -1,19 +1,24 @@
 <template>
   <div class="main-content mx-auto">
-    <div class="row d-flex justify-content-between mt-4">
-      <div class="col-auto fw-bold fs-2 fst-italic text-primary">
-        Tes #{{ testNumber }}
-      </div>
-
-      <div class="col-auto fw-bold fs-2 fst-italic text-primary">
-        Poin {{ score }}
-      </div>
+    <div class="button-back text-center">
+      <ButtonBack @click="router.push('/welcome')" /> <br />
+      Halaman Utama
     </div>
 
     <div class="row">
       <div class="col-12">
+        <div class="row d-flex justify-content-between mt-4">
+          <div class="col-auto fs-2 text-primary font-cake">
+            Tes #{{ testNumber }}
+          </div>
+
+          <div class="col-auto fs-2 text-primary font-cake">
+            Poin {{ score }}
+          </div>
+        </div>
+
         <div class="card shadow">
-          <div class="card-body">
+          <div class="card-body bg-dark">
             <div class="row">
               <div class="col-12 mx-auto mb-3">
                 <div class="row g-0 row-timer mx-auto">
@@ -156,4 +161,12 @@ watch(question, (newVal, oldVal) => {
 
 .row-answer
   width: 80%
+
+.button-back
+  position: fixed
+  bottom: 0px
+  left: 10%
+
+.font-cake
+  font-family: CakeCafe
 </style>
