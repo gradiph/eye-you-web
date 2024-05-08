@@ -179,8 +179,19 @@ export const useFetchSubmit = async (body: FormSubmit): Promise<boolean|null> =>
     if (nextIndex >= questions.value.length) {
       return null
     } else {
-      current.value.question = useQuestions().value[nextIndex]
-      current.value.score = current.value.result?.score || 0
+      const html = data.value?.isCorrect
+      ? '<center><img src="/check-mark.png" alt="Benar!"/> Benar!</center>'
+      : '<center><img src="/cross-mark.png" alt="Salah!"/> Salah!</center>'
+      const willClose = () => {
+        current.value.question = useQuestions().value[nextIndex]
+        current.value.score = current.value.result?.score || 0
+      }
+      const timer = 1500
+      useToastClient({
+        html,
+        timer,
+        willClose
+      })
       return true
     }
   } else {

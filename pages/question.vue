@@ -176,7 +176,7 @@ async function submitAnswer() {
     const result = await useFetchSubmit(form)
     isLoading.value = false
     answer.value = ''
-    if (isNull(result)) {
+    if (result === null) {
       router.push('/result')
     }
   }
