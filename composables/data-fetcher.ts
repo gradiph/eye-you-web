@@ -25,12 +25,14 @@ const token = useToken()
 const baseURL = computed(() => rc.public.apiBaseUrl)
 const basicHeaders = computed(() => {
   return {
-    'ngrok-skip-browser-warning': '1'
+    'ngrok-skip-browser-warning': '1',
+    Accept: 'application/json'
   }
 })
 const authHeaders = computed(() => {
   return {
     Authorization: `Bearer ${token.value}`,
+    Accept: 'application/json',
     'ngrok-skip-browser-warning': '1'
   }
 })
@@ -101,10 +103,15 @@ export const useFetchProfile = async (): Promise<boolean> => {
     useCurrent().value.profile = data.value?.user
     return true
   } else {
-    useToastClient({
-      title: 'Terjadi kesalahan',
-      text: error.value?.message
-    })
+    if (error.value?.statusCode == 401) {
+      useToken().value = undefined
+      useRouter().push('/')
+    } else {
+      useToastClient({
+        title: 'Terjadi kesalahan',
+        text: error.value?.message
+      })
+    }
     return false
   }
 }

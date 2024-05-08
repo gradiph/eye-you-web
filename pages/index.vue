@@ -24,10 +24,19 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 function openCanvas() {
     
 }
+
+const profile = computed(() => useCurrent().value.profile)
+watch(profile, (newVal) => {
+    if (newVal) {
+        useRouter().push('/welcome')
+    }
+}, {
+    immediate: true
+})
 </script>
 
 <style scoped lang="sass">
