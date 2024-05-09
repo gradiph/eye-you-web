@@ -180,8 +180,8 @@ export const useFetchSubmit = async (body: FormSubmit): Promise<boolean|null> =>
       return null
     } else {
       const html = data.value?.isCorrect
-      ? '<center><img src="/check-mark.png" alt="Benar!"/> Benar!</center>'
-      : '<center><img src="/cross-mark.png" alt="Salah!"/> Salah!</center>'
+      ? '<center><img src="/check-mark.png" alt="Benar!"/> <span class="text-primary fw-bolder">Benar!</span></center>'
+      : '<center><img src="/cross-mark.png" alt="Salah!"/> <span class="text-primary fw-bolder">Salah!</span></center>'
       const willClose = () => {
         current.value.question = useQuestions().value[nextIndex]
         current.value.score = current.value.result?.score || 0

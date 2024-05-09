@@ -1,4 +1,15 @@
-import { Profile } from "./profile"
+export interface ResultQuestion {
+  id: number
+  question_id: number
+  result_id: number
+  image: string
+  duration: number
+  score: number
+  correct_answer: string
+  actual_answer: string
+  created_at: Date
+  updated_at: Date
+}
 
 export interface Result {
   id: number
@@ -8,37 +19,38 @@ export interface Result {
   ended_at?: Date
   created_at: Date
   updated_at: Date
-  user?: Profile
-  test?: Test
-  questions?: Array<Question>
+  questions?: Array<ResultQuestion>
 }
 
 export interface Test {
   id: number
-  level_id: number
   mode_id: number
   created_at: Date
   updated_at: Date
 }
 
-export interface Answer {
+export interface Level {
   id: number
-  question_id: number
-  image: string
-  alt_text: string
-  is_correct: boolean
-  created_at: Date
-  updated_at: Date
+  name: string
+}
+
+export interface TestLevel {
+  id: number
+  test_id: number
+  level_id: number
+  level: Level
 }
 
 export interface Question {
   id: number
-  test_id: number
+  test_level_id: number
   image: string
   duration: number
+  answer: string
   created_at: Date
   updated_at: Date
-  answers?: Array<Answer>
+  result_question_id: number
+  test_level: TestLevel
 }
 
 export interface StartGameResponse {
@@ -48,17 +60,14 @@ export interface StartGameResponse {
 }
 
 export interface FormSubmit {
-  resultId: number
-  questionId: number
-  answerId?: number | null
-  answerText?: string
+  id: number
+  answer: string
 }
 
 export interface SubmitResponse {
   success: boolean
   isCorrect: boolean
   result: Result
-  questions: Array<Question>
 }
 
 export interface Pagination<T>{

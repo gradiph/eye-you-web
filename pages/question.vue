@@ -8,6 +8,9 @@
     <div class="row">
       <div class="col-12">
         <div class="row d-flex justify-content-between mt-4">
+          <div class="col-12 text-primary">
+            Level - <span class="fw-bold">{{ level }}</span>
+          </div>
           <div class="col-auto fs-2 text-primary font-cake">
             Tes #{{ testNumber }}
           </div>
@@ -110,8 +113,8 @@
 </template>
 
 <script setup lang="ts">
-import { indexOf, isNull } from 'lodash'
-import { Answer, FormSubmit, Question, Result } from '~/types';
+import { indexOf } from 'lodash'
+import { FormSubmit, Question, Result } from '~/types';
 
 const current = useCurrent()
 const questions = useQuestions()
@@ -125,35 +128,17 @@ const score = computed(() => current.value.score)
 const question = computed(() => current.value?.question as Question)
 const questionImage = computed(() => question.value.image)
 // const answers = computed(() => question.value?.answers || [])
-const resultId = computed(() => (current.value.result as Result).id)
 const timeLeft = ref<number>(0)
 const timeLeftPercent = computed(() => Math.ceil(timeLeft.value * 100 / question.value.duration))
 const progressbarStyle = computed(() => `width: ${timeLeftPercent.value}%;`)
 const answer = ref<string>('')
-
-async function selectAnswer(answer: Answer|undefined = undefined) {
-  if (!isLoading.value) {
-    isLoading.value = true
-    clearInterval(timer)
-    const form: FormSubmit = {
-      resultId: resultId.value,
-      answerId: answer?.id || null,
-      questionId: question.value.id
-    }
-    const result = await useFetchSubmit(form)
-    isLoading.value = false
-    if (isNull(result)) {
-      router.push('/result')
-    }
-  }
-}
+const level = computed(() => current.value.question?.test_level.level.name || '')
 
 function startTimer() {
   timer = setInterval(async () => {
     timeLeft.value = timeLeft.value - 0.1
     if (timeLeft.value <= 0) {
       clearInterval(timer)
-      // await selectAnswer()
       await submitAnswer()
     }
   }, 100)
@@ -169,9 +154,8 @@ async function submitAnswer() {
     isLoading.value = true
     clearInterval(timer)
     const form: FormSubmit = {
-      resultId: resultId.value,
-      answerText: parseInt(answer.value).toLocaleString(),
-      questionId: question.value.id
+      id: current.value.question?.result_question_id as number,
+      answer: parseInt(answer.value).toLocaleString()
     }
     const result = await useFetchSubmit(form)
     isLoading.value = false
