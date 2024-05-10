@@ -1,22 +1,20 @@
 <template>
-    <div class="h-100 align-middle">
-        <div class="row g-0">
-            <div class="col-1 title text-primary">"</div>
-            <div class="col-10 justify-content-center">
-                <div class="title text-primary text-center">{{ title }}</div>
-                <div v-html="subtitle" class="subtitle text-secondary text-center"></div>
-            </div>
-            <div class="col-1 title text-primary align-bottom">"</div>
+    <div class="row g-0">
+        <div class="col-1 title text-primary">"</div>
+        <div class="col-10 justify-content-center">
+            <div class="title text-primary text-center">{{ title }}</div>
+            <div v-html="subtitle" class="subtitle text-secondary text-center"></div>
+        </div>
+        <div class="col-1 title text-primary align-bottom">"</div>
+    </div>
+
+    <div class="row gy-1 mt-4">
+        <div class="col-12 text-center">
+            <ButtonPlay @click="selectMode()"/>
         </div>
 
-        <div class="row gy-1 mt-4">
-            <div class="col-12 text-center">
-                <ButtonPlay @click="selectMode()"/>
-            </div>
-
-            <div @click="selectMode()" class="col-12 text-center text-secondary clickable">
-                Selanjutnya
-            </div>
+        <div @click="selectMode()" class="col-12 text-center text-secondary clickable">
+            Selanjutnya
         </div>
     </div>
 </template>
