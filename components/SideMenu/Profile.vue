@@ -67,7 +67,7 @@ const router = useRouter()
 const showSideMenu = useShowSideMenu()
 
 function getImageUrl(achievement: Achievement) {
-  return rc.public.apiBaseUrl + achievement.image
+  return achievement.image
 }
 
 function getAvatarUrl(avatar: string) {
