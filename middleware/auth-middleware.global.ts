@@ -4,7 +4,6 @@ export const keyStorageToken = 'EyeYou.token'
 
 export default defineNuxtRouteMiddleware(async (to) => {
   const token = useToken()
-  console.log('token: ', token.value)
   const storedToken = useLocalStorage<string | undefined>(keyStorageToken, undefined)
   if (token.value === undefined && storedToken !== undefined) {
     token.value = storedToken.value

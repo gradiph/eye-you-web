@@ -21,7 +21,6 @@ const current = useCurrent()
 const form = useFormEditProfile()
 
 async function onSubmit() {
-  console.log('onSubmitEditProfile')
   emit('submit')
 }
 </script>

@@ -260,6 +260,4 @@ export const useFetchImage = async (path: string) => {
     headers: basicHeaders.value,
     method: 'GET'
   })
-  console.log('fetchImage:data', data)
-  console.log('fetchImage:error', error)
 }

@@ -54,7 +54,6 @@ const message = computed(() => {
 })
 
 watch(tab, (newVal, oldVal) => {
-  console.log('newVal', newVal, 'oldVal', oldVal)
   if (newVal !== oldVal) {
     if (newVal === 'login') {
       formLogin.value.resetForm()

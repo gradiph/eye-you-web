@@ -36,7 +36,6 @@ const showSideMenu = useShowSideMenu()
 
 async function onSubmit() {
   isLoading.value = true
-  console.log('onSubmit', form.value)
   const isSuccess = await useFetchLogin(form.value)
   if (isSuccess) {
     useToastClient({

@@ -28,7 +28,6 @@ const showEditMenu = ref(false)
 const showSideMenu = useShowSideMenu()
 
 watch(showSideMenu, (newVal) => {
-  console.log('showSideMenu', newVal)
   if (canvas.value !== null) {
     const offcanvas = Offcanvas.getOrCreateInstance(canvas.value)
     if (newVal === false) {

@@ -39,7 +39,6 @@ function getModeImage(mode: GameMode): string {
 }
 
 async function startGame(mode: GameMode) {
-  console.log('startGame:mode', mode)
   current.value.gameMode = mode
   const isSuccess = await useFetchQuestions(mode.id)
   if (isSuccess) {

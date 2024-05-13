@@ -20,7 +20,6 @@ const tab = useState('sideMenuTab', () => 'login')
 
 async function onSubmit() {
   isLoading.value = true
-  console.log('onSubmit', form.value)
   const isSuccess = await useFetchRegister(form.value)
   if (isSuccess) {
     useToastClient({
