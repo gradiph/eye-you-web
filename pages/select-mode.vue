@@ -21,12 +21,13 @@
 </template>
 
 <script setup lang="ts">
-import { GameMode } from '~/types'
+import { GameMode, GameStatus } from '~/types'
 
 // const rc = useRuntimeConfig()
 const gameModes = useGameModes()
 const router = useRouter()
 const current = useCurrent()
+const gameStatus = useGameStatus()
 
 onMounted(async () => {
   await useFetchModes()
@@ -43,6 +44,7 @@ async function startGame(mode: GameMode) {
   const isSuccess = await useFetchQuestions(mode.id)
   if (isSuccess) {
     router.push('/question')
+    gameStatus.value = GameStatus.PLAYING
   }
 }
 </script>

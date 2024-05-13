@@ -114,12 +114,11 @@
 
 <script setup lang="ts">
 import { indexOf } from 'lodash'
-import { FormSubmit, Question, Result } from '~/types';
+import { FormSubmit, Question } from '~/types';
 
 const current = useCurrent()
 const questions = useQuestions()
 const router = useRouter()
-// const rc = useRuntimeConfig()
 let timer: NodeJS.Timeout | undefined = undefined
 
 const isLoading = ref<boolean>(false)
@@ -127,7 +126,6 @@ const testNumber = computed(() => indexOf(questions.value, current.value.questio
 const score = computed(() => current.value.score)
 const question = computed(() => current.value?.question as Question)
 const questionImage = computed(() => question.value.image)
-// const answers = computed(() => question.value?.answers || [])
 const timeLeft = ref<number>(0)
 const timeLeftPercent = computed(() => Math.ceil(timeLeft.value * 100 / question.value.duration))
 const progressbarStyle = computed(() => `width: ${timeLeftPercent.value}%;`)

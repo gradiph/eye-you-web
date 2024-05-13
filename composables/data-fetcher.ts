@@ -5,6 +5,7 @@ import {
   FormSubmit,
   GameMode,
   GameModesResponse,
+  GameStatus,
   GetProfileResponse,
   LoginResponse,
   Question,
@@ -177,8 +178,10 @@ export const useFetchSubmit = async (body: FormSubmit): Promise<boolean|null> =>
     current.value.result = data.value?.result
     const nextIndex = indexOf(questions.value, current.value.question) + 1
     if (nextIndex >= questions.value.length) {
+      useGameStatus().value = GameStatus.STOPPED
       return null
     } else {
+      useGameStatus().value = data.value?.isCorrect ? GameStatus.CORRECT : GameStatus.WRONG
       const html = data.value?.isCorrect
       ? '<center><img src="/check-mark.png" alt="Benar!"/> <span class="text-primary fw-bolder">Benar!</span></center>'
       : '<center><img src="/cross-mark.png" alt="Salah!"/> <span class="text-primary fw-bolder">Salah!</span></center>'
@@ -240,6 +243,7 @@ export const useFetchResult = async (): Promise<boolean> => {
   })
   if (isNull(error.value)) {
     current.value.analyzes = data.value?.analyzes
+    useGameStatus().value = GameStatus.FINISHED
     return true
   } else {
     useToastClient({

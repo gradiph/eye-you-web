@@ -99,3 +99,11 @@ export interface ResultResponse {
   result: Result
   analyzes: Analyzes
 }
+
+export enum GameStatus {
+  STOPPED,
+  PLAYING,
+  CORRECT,
+  WRONG,
+  FINISHED
+}

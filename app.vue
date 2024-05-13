@@ -4,6 +4,8 @@
       <NuxtPage />
     </NuxtLayout>
 
+    <AudioBackground />
+
     <SpeedInsights />
   </div>
 </template>
