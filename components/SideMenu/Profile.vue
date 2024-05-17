@@ -33,17 +33,10 @@
             <div class="col-12 d-flex justify-content-center mb-3">
               <img src="/text-prestasi.png" alt="Prestasi" /> <img src="/logo-award.png" />
             </div>
-            <!-- <div class="col-6 text-center">
-              <figure class="figure text-center">
-                <img src="http://127.0.0.1:8000/images/achievement-login.png"
-                  class="figure-img img-fluid rounded shadow" alt="Berhasil masuk!" />
-                <figcaption class="figure-caption text-center text-primary">Berhasil masuk!</figcaption>
-              </figure>
-            </div> -->
-            <div v-for="achievement in current.profile?.achievements || []" :key="achievement.id" class="col-6 text-center">
-              <figure class="figure text-center">
-                <img :src="getImageUrl(achievement)" class="figure-img img-fluid rounded" :alt="achievement.name" />
-                <figcaption class="figure-caption text-center text-primary">{{ achievement.name }}</figcaption>
+            <div v-for="achievement in current.profile?.all_achievements || []" :key="achievement.id" class="col-6 text-center">
+              <figure class="figure text-center" :class="achievement?.acquired ? '' : 'opacity-50'">
+                <img :src="getImageUrl(achievement)" class="figure-img img-fluid rounded" :alt="achievement?.name" />
+                <figcaption class="figure-caption text-center text-primary">{{ achievement?.name }}</figcaption>
               </figure>
             </div>
           </div>
@@ -60,6 +53,7 @@
 <script setup lang="ts">
 import { keyStorageToken } from '~/middleware/auth-middleware.global';
 import { Achievement } from '~/types';
+import { forEach, indexOf, reject } from 'lodash';
 
 const current = useCurrent()
 const rc = useRuntimeConfig()
@@ -67,11 +61,7 @@ const router = useRouter()
 const showSideMenu = useShowSideMenu()
 
 function getImageUrl(achievement: Achievement) {
-  return achievement.image
-}
-
-function getAvatarUrl(avatar: string) {
-  return rc.public.apiBaseUrl + '/images' + avatar
+  return achievement?.image
 }
 
 function logout() {
@@ -80,6 +70,19 @@ function logout() {
   showSideMenu.value = false
   router.push('/')
 }
+
+const achievements = computed(() => current.value.profile?.all_achievements)
+watch (achievements, (newList, oldList) => {
+  if (oldList && oldList.length > 0) {
+    const newItems = reject(newList, (item) => indexOf(oldList, item) >= 0)
+    forEach(newItems, (item) => {
+      const html = `<center><img src="${item?.image}" alt="${item.name}"/> <span class="text-primary fw-bolder">${item.name}</span></center>`
+      useToastClient({
+        html
+      })
+    })
+  }
+})
 </script>
 
 <style scoped lang="sass">

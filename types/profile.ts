@@ -5,7 +5,7 @@ export interface Profile {
   email?: string
   total_score?: number
   avatar?: string
-  achievements?: Array<Achievement>
+  all_achievements?: Array<Achievement>
 }
 
 export interface GetProfileResponse {
@@ -16,6 +16,8 @@ export interface Achievement {
   id?: number
   name?: string
   image?: string
+  order?: number
+  acquired?: boolean
   created_at?: Date
   updated_at?: Date
 }
