@@ -75,12 +75,13 @@ const achievements = computed(() => current.value.profile?.all_achievements)
 watch (achievements, (newList, oldList) => {
   if (oldList && oldList.length > 0) {
     const newItems = reject(newList, (item) => indexOf(oldList, item) >= 0)
-    forEach(newItems, (item) => {
-      const html = `<center><img src="${item?.image}" alt="${item.name}"/> <span class="text-primary fw-bolder">${item.name}</span></center>`
-      useToastClient({
-        html
-      })
-    })
+    console.log('new achievements', newItems)
+    // forEach(newItems, (item) => {
+    //   const html = `<center><img src="${item?.image}" alt="${item.name}"/> <span class="text-primary fw-bolder">${item.name}</span></center>`
+    //   useToastClient({
+    //     html
+    //   })
+    // })
   }
 })
 </script>

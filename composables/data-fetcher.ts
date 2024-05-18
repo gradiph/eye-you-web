@@ -173,7 +173,7 @@ export const useFetchSubmit = async (body: FormSubmit): Promise<boolean|null> =>
     headers: authHeaders.value,
     method
   })
-  useFetchProfile()
+  
   if (isNull(error.value)) {
     current.value.result = data.value?.result
     const nextIndex = indexOf(questions.value, current.value.question) + 1
@@ -244,6 +244,7 @@ export const useFetchResult = async (): Promise<boolean> => {
   if (isNull(error.value)) {
     current.value.analyzes = data.value?.analyzes
     useGameStatus().value = GameStatus.FINISHED
+    useFetchProfile()
     return true
   } else {
     useToastClient({
