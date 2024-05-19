@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-auto">
-      <img :src="current.profile?.avatar" alt="avatar" class="avatar" />
+      <img :src="avatar" alt="avatar" class="avatar" />
     </div>
     <div class="col">
       <div class="card shadow">
@@ -53,12 +53,13 @@
 <script setup lang="ts">
 import { keyStorageToken } from '~/middleware/auth-middleware.global';
 import { Achievement } from '~/types';
-import { forEach, indexOf, reject } from 'lodash';
+import { indexOf, reject } from 'lodash';
 
 const current = useCurrent()
 const rc = useRuntimeConfig()
 const router = useRouter()
 const showSideMenu = useShowSideMenu()
+const avatar = computed(() => rc.public.apiBaseUrl + current.value.profile?.avatar)
 
 function getImageUrl(achievement: Achievement) {
   return achievement?.image
