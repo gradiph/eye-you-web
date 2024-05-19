@@ -20,7 +20,7 @@
       <button @click="$emit('edit')" class="btn btn-outline-primary text-primary fw-bolder shadow" type="button">Edit Profil</button>
     </div>
     <div class="col-12 mt-2">
-      <div class="card shadow">
+      <div @click="$emit('rank')" class="card shadow clickable">
         <div class="card-body text-primary fw-bolder text-center">
           Total Skor : <span class="text-secondary fw-bolder">{{ current.profile?.total_score || 0 }}</span>
         </div>

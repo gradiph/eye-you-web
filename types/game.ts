@@ -86,6 +86,10 @@ export interface RankingResponse {
   results: Pagination<Result>
 }
 
+export interface RankingUserResponse {
+  users: Pagination<Result>
+}
+
 export interface Analyzes {
   total_questions: number
   total_correct: number

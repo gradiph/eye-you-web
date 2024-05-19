@@ -10,6 +10,7 @@ import {
   LoginResponse,
   Question,
   RankingResponse,
+  RankingUserResponse,
   RegisterResponse,
   Result,
   ResultResponse,
@@ -218,6 +219,27 @@ export const useFetchResults = async (): Promise<boolean> => {
   })
   if (isNull(error.value)) {
     results.value = data.value?.results.data || []
+    return true
+  } else {
+    useToastClient({
+      title: 'Terjadi kesalahan',
+      text: error.value?.message
+    })
+    return false
+  }
+}
+
+export const useFetchUsers = async (): Promise<boolean> => {
+  const users = useRankUsers()
+
+  const url = `/user/ranking/users`
+  const { data, error } = await useFetch<RankingUserResponse>(url, {
+    baseURL: baseURL.value,
+    headers: authHeaders.value,
+    method: 'GET'
+  })
+  if (isNull(error.value)) {
+    users.value = data.value?.users.data || []
     return true
   } else {
     useToastClient({

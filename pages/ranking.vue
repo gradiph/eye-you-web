@@ -27,12 +27,12 @@
                 </tr>
               </thead>
               <tbody class="">
-                <tr v-for="result in results" :key="result.id">
+                <tr v-for="user in users" :key="user.id">
                   <td class="text-primary">
-                    <img :src="result.user?.avatar || '/user-default.png'" alt="Avatar" class="avatar ms-4 me-2" /> {{ result.user?.name }}
+                    <img :src="user?.avatar || '/user-default.png'" alt="Avatar" class="avatar ms-4 me-2" /> {{ user?.name }}
                   </td>
                   <td class="align-middle text-center text-primary">
-                    {{ result.score }}
+                    {{ user?.total_score || 0 }}
                   </td>
                 </tr>
               </tbody>
@@ -53,10 +53,10 @@
 
 <script setup lang="ts">
 const router = useRouter()
-const results = useResults()
+const users = useRankUsers()
 
 onMounted(async () => {
-  await useFetchResults()
+  await useFetchUsers()
 })
 </script>
 

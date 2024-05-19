@@ -10,7 +10,7 @@
       </div>
       <div class="offcanvas-body">
         <SideMenuEditProfile v-if="showEditMenu" @submit="showEditMenu = false" />
-        <SideMenuProfile v-else @edit="showEditMenu = true" />
+        <SideMenuProfile v-else @edit="showEditMenu = true" @rank="goToRanking()" />
       </div>
     </div>
   </div>
@@ -26,6 +26,12 @@ const showEditMenu = ref(false)
 
 // composable
 const showSideMenu = useShowSideMenu()
+
+function goToRanking() {
+  const offcanvas = Offcanvas.getOrCreateInstance(canvas.value)
+  offcanvas.hide()
+  useRouter().push('/ranking')
+}
 
 watch(showSideMenu, (newVal) => {
   if (canvas.value !== null) {
