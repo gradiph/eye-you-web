@@ -13,8 +13,7 @@ const defaultFormRegister: FormRegister = {
 
 const defaultFormEditProfile: FormEditProfile = {
   name: '',
-  password: '',
-  password_confirmation: ''
+  _method: 'PUT'
 }
 
 export const defaultCurrent: Current = {

@@ -1,6 +1,7 @@
 <template>
   <div class="row">
     <div class="col-auto">
+      <!-- <InputImage :src="avatar" alt="avatar" class="avatar" id="img-profile" /> -->
       <img :src="avatar" alt="avatar" class="avatar" />
     </div>
     <div class="col">
@@ -59,7 +60,7 @@ const current = useCurrent()
 const rc = useRuntimeConfig()
 const router = useRouter()
 const showSideMenu = useShowSideMenu()
-const avatar = computed(() => rc.public.apiBaseUrl + current.value.profile?.avatar)
+const avatar = computed(() => rc.public.apiBaseUrl + '/' + current.value.profile?.avatar)
 
 function getImageUrl(achievement: Achievement) {
   return achievement?.image

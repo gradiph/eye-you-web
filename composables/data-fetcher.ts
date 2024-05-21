@@ -12,11 +12,9 @@ import {
   RankingResponse,
   RankingUserResponse,
   RegisterResponse,
-  Result,
   ResultResponse,
   StartGameResponse,
-  SubmitResponse,
-  Test
+  SubmitResponse
 } from '~/types'
 import { useResults } from './state-management'
 import { keyStorageToken } from '~/middleware/auth-middleware.global'
@@ -277,10 +275,37 @@ export const useFetchResult = async (): Promise<boolean> => {
   }
 }
 
-export const useFetchImage = async (path: string) => {
-  const { data, error } = await useFetch(path, {
+export const useFetchUpdateProfile = async () => {
+  const current = useCurrent()
+  const form = useFormEditProfile()
+  const url = '/user/profile'
+  const body = new FormData()
+  
+  body.append('_method', form.value._method)
+  body.append('name', form.value.name)
+  if (form.value.image) {
+    body.append('image', form.value.image)
+  }
+  if (form.value.password) {
+    body.append('password', form.value.password)
+  }
+  if (form.value.password_confirmation) {
+    body.append('password_confirmation', form.value.password_confirmation)
+  }
+  const { data, error } = await useFetch<GetProfileResponse>(url, {
     baseURL: baseURL.value,
-    headers: basicHeaders.value,
-    method: 'GET'
+    body,
+    headers: authHeaders.value,
+    method
   })
+  if (isNull(error.value)) {
+    current.value.profile = data.value?.user
+    return true
+  } else {
+    useToastClient({
+      title: 'Terjadi kesalahan',
+      text: error.value?.message
+    })
+    return false
+  }
 }

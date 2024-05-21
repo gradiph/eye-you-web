@@ -24,6 +24,8 @@ export interface Achievement {
 
 export interface FormEditProfile {
   name: string
-  password: string
-  password_confirmation: string
+  password?: string
+  password_confirmation?: string
+  image?: File
+  _method: string
 }
