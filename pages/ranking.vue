@@ -29,7 +29,7 @@
               <tbody class="">
                 <tr v-for="user in users" :key="user.id">
                   <td class="text-primary">
-                    <img :src="user?.avatar || '/user-default.png'" alt="Avatar" class="avatar ms-4 me-2" /> {{ user?.name }}
+                    <img :src="getAvatarUrl(user?.avatar) || '/user-default.png'" alt="Avatar" class="avatar ms-4 me-2" /> {{ user?.name }}
                   </td>
                   <td class="align-middle text-center text-primary">
                     {{ user?.total_score || 0 }}
@@ -54,7 +54,15 @@
 <script setup lang="ts">
 const router = useRouter()
 const users = useRankUsers()
+const rc = useRuntimeConfig()
 
+function getAvatarUrl(avatar: string | undefined): string | undefined {
+  if (avatar == undefined) {
+    return undefined
+  }
+
+  return rc.public.apiBaseUrl + '/' + avatar
+}
 onMounted(async () => {
   await useFetchUsers()
 })
