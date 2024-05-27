@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import { keyStorageToken } from '~/middleware/auth-middleware.global';
 import { Achievement } from '~/types';
-import { indexOf, reject } from 'lodash';
+import { filter, findIndex, forEach, includes, indexOf, reject } from 'lodash';
 
 const current = useCurrent()
 const rc = useRuntimeConfig()
@@ -77,14 +77,35 @@ async function logout() {
 const achievements = computed(() => current.value.profile?.all_achievements)
 watch (achievements, (newList, oldList) => {
   if (oldList && oldList.length > 0) {
-    const newItems = reject(newList, (item) => indexOf(oldList, item) >= 0)
-    console.log('new achievements', newItems)
-    // forEach(newItems, (item) => {
-    //   const html = `<center><img src="${item?.image}" alt="${item.name}"/> <span class="text-primary fw-bolder">${item.name}</span></center>`
-    //   useToastClient({
-    //     html
-    //   })
-    // })
+    const newItems = filter(newList, (newItem) => {
+
+      // skip not acquired achievements
+      if (!newItem.acquired) {
+        return false
+      }
+
+      // show new acquired achievement
+      const oldIndex = findIndex(oldList, { id: newItem.id })
+      if (oldIndex < 0) {
+        return true
+      }
+
+      // skip existing acquired achievement
+      const oldItem = oldList[oldIndex]
+      if (oldItem.acquired) {
+        return false
+      }
+
+      // show the rest
+      return true
+    })
+    
+    forEach(newItems, (item) => {
+      const html = `<center><img src="${item?.image}" alt="${item.name}"/> <span class="text-primary fw-bolder">${item.name}</span></center>`
+      useToastClient({
+        html
+      })
+    })
   }
 })
 </script>
