@@ -12,7 +12,7 @@ export default (options: SweetAlertOptions) => {
       toast.addEventListener('mouseenter', Swal.stopTimer)
       toast.addEventListener('mouseleave', Swal.resumeTimer)
     },
-    target: '.main-content',
+    target: '.main-container',
   }
   return Swal.fire(assign(defaultOptions, options))
 }

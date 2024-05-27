@@ -1,7 +1,6 @@
 <template>
   <div class="row">
     <div class="col-auto">
-      <!-- <InputImage :src="avatar" alt="avatar" class="avatar" id="img-profile" /> -->
       <img :src="avatar" alt="avatar" class="avatar" />
     </div>
     <div class="col">
@@ -66,11 +65,13 @@ function getImageUrl(achievement: Achievement) {
   return achievement?.image
 }
 
-function logout() {
+async function logout() {
+  navigateTo({
+      path: '/'
+    })
   useToken().value = undefined
   localStorage.removeItem(keyStorageToken)
   showSideMenu.value = false
-  router.push('/')
 }
 
 const achievements = computed(() => current.value.profile?.all_achievements)

@@ -159,7 +159,9 @@ async function submitAnswer() {
     isLoading.value = false
     answer.value = ''
     if (result === null) {
-      router.push('/result')
+      await navigateTo({
+        path: '/result'
+      })
     }
   }
 }

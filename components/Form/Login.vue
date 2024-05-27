@@ -41,9 +41,11 @@ async function onSubmit() {
     useToastClient({
       html: '<img src="/berhasil-masuk.png" alt="login-success"/> Berhasil Masuk',
     })
-    await router.push('/welcome')
     showSideMenu.value = false
     useFetchProfile()
+    await navigateTo({
+      path: '/welcome'
+    })
   }
 
   isLoading.value = false

@@ -1,6 +1,12 @@
 <template>
   <div class="main-container">
-    <SideMenuGuest />
+    <SideMenuLoggedIn v-if="isLoggedIn" />
+    <SideMenuGuest v-else />
+    
     <slot />
   </div>
 </template>
+
+<script setup lang="ts">
+const isLoggedIn = computed(() => useToken().value !== undefined && useToken().value !== 'undefined')
+</script>

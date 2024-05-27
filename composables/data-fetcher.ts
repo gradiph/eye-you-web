@@ -19,26 +19,17 @@ import {
 import { useResults } from './state-management'
 import { keyStorageToken } from '~/middleware/auth-middleware.global'
 
-const rc = useRuntimeConfig()
-const token = useToken()
-
-const baseURL = computed(() => rc.public.apiBaseUrl)
 const basicHeaders = computed(() => {
   return {
     'ngrok-skip-browser-warning': '1',
     Accept: 'application/json'
   }
 })
-const authHeaders = computed(() => {
-  return {
-    Authorization: `Bearer ${token.value}`,
-    Accept: 'application/json',
-    'ngrok-skip-browser-warning': '1'
-  }
-})
 const method = 'post'
 
 export const useFetchLogin = async (body: FormLogin): Promise<boolean> => {
+  const rc = useRuntimeConfig()
+  const baseURL = computed(() => rc.public.apiBaseUrl)
   const url = '/user/login'
   const { data, error } = await useFetch<LoginResponse>(url, {
     method,
@@ -68,6 +59,8 @@ export const useFetchLogin = async (body: FormLogin): Promise<boolean> => {
 }
 
 export const useFetchRegister = async (body: FormRegister): Promise<boolean> => {
+  const rc = useRuntimeConfig()
+  const baseURL = computed(() => rc.public.apiBaseUrl)
   const url = '/user/register'
   const { data, error } = await useFetch<RegisterResponse>(url, {
     method,
@@ -94,6 +87,16 @@ export const useFetchRegister = async (body: FormRegister): Promise<boolean> => 
 }
 
 export const useFetchProfile = async (): Promise<boolean> => {
+  const rc = useRuntimeConfig()
+  const baseURL = computed(() => rc.public.apiBaseUrl)
+  const token = useToken()
+  const authHeaders = computed(() => {
+    return {
+      Authorization: `Bearer ${token.value}`,
+      Accept: 'application/json',
+      'ngrok-skip-browser-warning': '1'
+    }
+  })
   const url = '/user/profile'
   const { data, error } = await useFetch<GetProfileResponse>(url, {
     baseURL: baseURL.value,
@@ -117,6 +120,16 @@ export const useFetchProfile = async (): Promise<boolean> => {
 }
 
 export const useFetchModes = async (): Promise<boolean> => {
+  const rc = useRuntimeConfig()
+  const baseURL = computed(() => rc.public.apiBaseUrl)
+  const token = useToken()
+  const authHeaders = computed(() => {
+    return {
+      Authorization: `Bearer ${token.value}`,
+      Accept: 'application/json',
+      'ngrok-skip-browser-warning': '1'
+    }
+  })
   const url = '/user/game/modes'
   const { data, error } = await useFetch<GameModesResponse>(url, {
     baseURL: baseURL.value,
@@ -135,8 +148,18 @@ export const useFetchModes = async (): Promise<boolean> => {
 }
 
 export const useFetchQuestions = async (modeId: number): Promise<boolean> => {
+  const rc = useRuntimeConfig()
+  const baseURL = computed(() => rc.public.apiBaseUrl)
   const current = useCurrent()
   const questions = useQuestions()
+  const token = useToken()
+  const authHeaders = computed(() => {
+    return {
+      Authorization: `Bearer ${token.value}`,
+      Accept: 'application/json',
+      'ngrok-skip-browser-warning': '1'
+    }
+  })
 
   const url = '/user/game/start'
   const body = { modeId }
@@ -162,8 +185,18 @@ export const useFetchQuestions = async (modeId: number): Promise<boolean> => {
 }
 
 export const useFetchSubmit = async (body: FormSubmit): Promise<boolean|null> => {
+  const rc = useRuntimeConfig()
+  const baseURL = computed(() => rc.public.apiBaseUrl)
   const current = useCurrent()
   const questions = useQuestions()
+  const token = useToken()
+  const authHeaders = computed(() => {
+    return {
+      Authorization: `Bearer ${token.value}`,
+      Accept: 'application/json',
+      'ngrok-skip-browser-warning': '1'
+    }
+  })
 
   const url = '/user/game/submit'
   const { data, error } = await useFetch<SubmitResponse>(url, {
@@ -206,8 +239,18 @@ export const useFetchSubmit = async (body: FormSubmit): Promise<boolean|null> =>
 }
 
 export const useFetchResults = async (): Promise<boolean> => {
+  const rc = useRuntimeConfig()
+  const baseURL = computed(() => rc.public.apiBaseUrl)
   const current = useCurrent()
   const results = useResults()
+  const token = useToken()
+  const authHeaders = computed(() => {
+    return {
+      Authorization: `Bearer ${token.value}`,
+      Accept: 'application/json',
+      'ngrok-skip-browser-warning': '1'
+    }
+  })
 
   const url = `/user/ranking/${current.value.test?.id}`
   const { data, error } = await useFetch<RankingResponse>(url, {
@@ -228,7 +271,17 @@ export const useFetchResults = async (): Promise<boolean> => {
 }
 
 export const useFetchUsers = async (): Promise<boolean> => {
+  const rc = useRuntimeConfig()
+  const baseURL = computed(() => rc.public.apiBaseUrl)
   const users = useRankUsers()
+  const token = useToken()
+  const authHeaders = computed(() => {
+    return {
+      Authorization: `Bearer ${token.value}`,
+      Accept: 'application/json',
+      'ngrok-skip-browser-warning': '1'
+    }
+  })
 
   const url = `/user/ranking/users`
   const { data, error } = await useFetch<RankingUserResponse>(url, {
@@ -249,7 +302,17 @@ export const useFetchUsers = async (): Promise<boolean> => {
 }
 
 export const useFetchResult = async (): Promise<boolean> => {
+  const rc = useRuntimeConfig()
+  const baseURL = computed(() => rc.public.apiBaseUrl)
   const current = useCurrent()
+  const token = useToken()
+  const authHeaders = computed(() => {
+    return {
+      Authorization: `Bearer ${token.value}`,
+      Accept: 'application/json',
+      'ngrok-skip-browser-warning': '1'
+    }
+  })
 
   if (!current.value?.result?.id) {
     useRouter().push(useToken().value ? '/welcome' : '/')
@@ -276,10 +339,20 @@ export const useFetchResult = async (): Promise<boolean> => {
 }
 
 export const useFetchUpdateProfile = async () => {
+  const rc = useRuntimeConfig()
+  const baseURL = computed(() => rc.public.apiBaseUrl)
   const current = useCurrent()
   const form = useFormEditProfile()
   const url = '/user/profile'
   const body = new FormData()
+  const token = useToken()
+  const authHeaders = computed(() => {
+    return {
+      Authorization: `Bearer ${token.value}`,
+      Accept: 'application/json',
+      'ngrok-skip-browser-warning': '1'
+    }
+  })
   
   body.append('_method', form.value._method)
   body.append('name', form.value.name)
