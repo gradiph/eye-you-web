@@ -80,7 +80,7 @@ export const useFetchRegister = async (body: FormRegister): Promise<boolean> => 
   } else {
     useToastClient({
       title: 'Terjadi kesalahan',
-      text: error.value?.message
+      text: error.value?.data?.message || error.value?.message
     })
     return false
   }
