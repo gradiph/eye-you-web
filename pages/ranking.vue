@@ -61,7 +61,7 @@ function getAvatarUrl(avatar: string | undefined): string | undefined {
     return undefined
   }
 
-  return rc.public.apiBaseUrl + avatar
+  return rc.public.apiBaseUrl + '/' + avatar
 }
 onMounted(async () => {
   await useFetchUsers()
